@@ -62,6 +62,7 @@ public class GithubServiceImple implements GithubService {
         int responseCode = conn.getResponseCode();
 
         String responseData = getResponse(conn, responseCode);
+        System.out.println(responseCode);
         JSONObject jObject = new JSONObject(responseData);
 
         String accessToken = jObject.getString("access_token");
