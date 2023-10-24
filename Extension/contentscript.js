@@ -1,13 +1,18 @@
-// id가 "code_open_open"인 라디오 버튼 요소를 가져옵니다.
-const radio = document.getElementById('code_open_close');
+const submitButton = document.getElementById('submit_button');
+if (submitButton != null) {
+  submitButton.addEventListener('click', function () {
+    saveCode();
+  });
+}
 
-// 라디오 버튼에 클릭 이벤트 핸들러를 추가합니다.
-radio.addEventListener('change', function () {
-  myFunction();
-});
+// const radio = document.getElementById('code_open_close');
+// if (radio != null) {
+//   radio.addEventListener('change', function () {
+//     saveCode();
+//   });
+// }
 
-// 라디오 버튼을 클릭했을 때 실행될 함수를 정의합니다.
-function myFunction() {
+function saveCode() {
   // CodeMirror-line 클래스를 가지고 있는 모든 요소를 선택합니다.
   const codeMirrorLines = document.querySelectorAll('.CodeMirror-line');
 
@@ -19,4 +24,59 @@ function myFunction() {
 
   // 결과를 출력하거나 다른 작업을 수행합니다.
   console.log(contentWithNewlines);
+
+  localStorage.setItem('code', contentWithNewlines);
+}
+
+let solutionElements = document.querySelectorAll('[id^="solution-"]');
+
+let preContent = '';
+if (solutionElements.length > 0) {
+  let firstSolutionElement = solutionElements[0];
+  let spanElement = firstSolutionElement.querySelector('span[data-color]');
+  preContent = spanElement.textContent;
+  console.log(preContent);
+  if (preContent.includes('채점 중') || preContent.includes('기다리는 중')) {
+    // 2초 간격으로 내용 확인
+    const intervalId = setInterval(function () {
+      solutionElements = document.querySelectorAll('[id^="solution-"]');
+      firstSolutionElement = solutionElements[0];
+      spanElement = firstSolutionElement.querySelector('span[data-color]');
+
+      if (spanElement) {
+        let currentContent = spanElement.textContent;
+
+        if (currentContent === preContent) {
+          clearInterval(intervalId); // setInterval 중지
+          sendCode(currentContent);
+        }
+
+        preContent = currentContent; // 현재 내용을 저장
+      }
+    }, 2000);
+  } else {
+    console.log('이미 제출한 코드입니다.');
+  }
+}
+
+function sendCode(textValue) {
+  console.log(textValue);
+  if (localStorage.getItem('code')) {
+    var code = localStorage.getItem('code');
+
+    fetch('http://localhost:8080/code', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        code: code,
+        result: textValue,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
+  }
 }
