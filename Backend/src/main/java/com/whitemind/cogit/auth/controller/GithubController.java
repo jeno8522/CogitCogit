@@ -2,6 +2,8 @@ package com.whitemind.cogit.auth.controller;
 
 import com.whitemind.cogit.auth.service.GithubService;
 import com.whitemind.cogit.common.response.ResponseResult;
+import com.whitemind.cogit.member.dto.Member;
+import com.whitemind.cogit.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,12 +23,13 @@ import java.net.URL;
 @RequestMapping("/oauth")
 public class GithubController {
     private final GithubService githubService;
+    private final MemberRepository memberRepository;
     @GetMapping("/github/callback")
-    public ResponseResult getAcceccTokenRequest(@RequestParam String code) throws Exception {
-        log.info("getAccessTokenRequest | Github AccessToken 요청");
+    public ResponseResult refreshMemberRequest(@RequestParam String code) throws Exception {
+        log.info("getAccessTokenRequest | Member Github AccessToken 갱신");
         String accessToken = githubService.getAccessToken(code);
-        System.out.println(accessToken);
+        Member member = githubService.getGithubUserInfo(accessToken);
+        memberRepository.save(member);
         return ResponseResult.successResponse;
     }
-
 }
