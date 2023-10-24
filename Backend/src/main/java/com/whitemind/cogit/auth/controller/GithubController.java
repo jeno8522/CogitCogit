@@ -2,6 +2,7 @@ package com.whitemind.cogit.auth.controller;
 
 import com.whitemind.cogit.auth.service.GithubService;
 import com.whitemind.cogit.common.response.ResponseResult;
+import com.whitemind.cogit.common.response.SingleResponseResult;
 import com.whitemind.cogit.member.dto.Member;
 import com.whitemind.cogit.member.repository.MemberRepository;
 import com.whitemind.cogit.member.service.MemberService;
@@ -35,6 +36,7 @@ public class GithubController {
         Member member = githubService.getGithubUserInfo(accessToken);
         memberRepository.save(member);
         memberService.setToken(member.getMemberId(), response);
-        return ResponseResult.successResponse;
+        System.out.println(response.getHeader("Authorization"));
+        return new SingleResponseResult<>("OK");
     }
 }
