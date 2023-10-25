@@ -36,7 +36,12 @@ if (solutionElements.length > 0) {
   let spanElement = firstSolutionElement.querySelector('span[data-color]');
   preContent = spanElement.textContent;
   console.log(preContent);
-  if (preContent.includes('채점 중') || preContent.includes('기다리는 중')) {
+  if (
+    preContent.includes('채점 중') ||
+    preContent.includes('기다리는 중') ||
+    preContent.includes('채점 준비 중') ||
+    preContent.includes('중')
+  ) {
     // 2초 간격으로 내용 확인
     const intervalId = setInterval(function () {
       solutionElements = document.querySelectorAll('[id^="solution-"]');
@@ -46,11 +51,11 @@ if (solutionElements.length > 0) {
       if (spanElement) {
         let currentContent = spanElement.textContent;
 
-        if (currentContent === preContent) {
+        if (currentContent === preContent && !currentContent.includes('중')) {
           clearInterval(intervalId); // setInterval 중지
           sendCode(currentContent);
         }
-
+        console.log(currentContent);
         preContent = currentContent; // 현재 내용을 저장
       }
     }, 2000);
