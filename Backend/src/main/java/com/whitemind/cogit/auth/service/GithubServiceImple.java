@@ -23,6 +23,12 @@ public class GithubServiceImple implements GithubService {
     @Value("${GITHUB_CLIENT_SECRET}")
     private String clientSecret;
 
+    /**
+     * 유저 accessToken을 사용하여 유저 정보 반환
+     * @param accessToken
+     * @return
+     * @throws IOException
+     */
     public Member getGithubUserInfo(String accessToken) throws IOException {
         log.info("getGithubUserInfo | 유저 정보 요청");
         URL url = new URL("https://api.github.com/user");
@@ -44,6 +50,12 @@ public class GithubServiceImple implements GithubService {
         return member;
     }
 
+    /**
+     * Github 인가 코드를 사용하여 유저 git AccessToken 발급
+     * @param code
+     * @return
+     * @throws IOException
+     */
     public String getAccessToken(String code) throws IOException {
         log.info("getAccessToken | Github AccessToken 요청");
         URL url = new URL("https://github.com/login/oauth/access_token");
