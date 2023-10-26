@@ -2,8 +2,10 @@ package com.whitemind.cogit.common.util;
 
 import java.util.Date;
 
+import com.whitemind.cogit.common.entity.JWT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 
@@ -20,15 +22,20 @@ import lombok.extern.slf4j.Slf4j;
 public class JwtService {
     public static final Logger logger = LoggerFactory.getLogger(JwtService.class);
 
-    private static final int KEY_SIZE_BITS = 256; // 키의 비트 수 (256비트 사용)
+    @Value("${JWT_KEY_SIZE_BITS}")
+    private String KEY_SIZE_BITS; // 키의 비트 수 (256비트 사용)
 
-    private static final int ACCESS_TOKEN_EXPIRE_WEEKEND = 100; // weekend
-    private static final long ACCESS_TOKEN_VALID_TIME = 1000L * 60 * 60 * 24 * 7 * ACCESS_TOKEN_EXPIRE_WEEKEND;
+    @Value("${ACCESS_TOKEN_VALID_TIME}")
+    private String ACCESS_TOKEN_VALID_TIME;
 
-    private static final String SECRET_KEY = "SSAFY_A610_BENEPICK_BACKEND_SECRET_KEY";
+    @Value("${REFRESH_TOKEN_VALID_TIME}")
+    private String REFRESH_TOKEN_VALID_TIME;
 
-    public <T> String createAccessToken(String key, T data) {
-        return create("access-token", key, data, ACCESS_TOKEN_VALID_TIME); // ms
+    @Value("${JWT_SECRET_KEY}")
+    private String SECRET_KEY;
+
+    public <T> JWT createAccessToken(String key, T data) {
+        return create("access-token", key, data); // ms
     }
 
     /**
@@ -38,30 +45,42 @@ public class JwtService {
      * expire : 토큰 유효기간 설정을 위한 값(밀리초 단위)
      * jwt 토큰의 구성 : header+payload+signature
      */
-    public <T> String create(String subject, String key, T data, long expire) {
+    public <T> JWT create(String subject, String key, T data) {
         // Payload : 토큰 제목 (Subject), 생성일 (IssuedAt), 유효기간 (Expiration), 데이터 (Claim)
         Claims claims = Jwts.claims()
                 // 토큰 제목 access-token/refresh-token
                 .setSubject(subject)
                 // 생성일
-                .setIssuedAt(new Date())
-                // 만료일 (유효기간)
-                .setExpiration(new Date(System.currentTimeMillis() + expire));
+                .setIssuedAt(new Date());
 
-        // 저장할 data의 key, value => loginId, loginUser.getUserLoginId()
+        // 저장할 data의 key, value => memberId, ...
         claims.put(key, data);
 
-        String jwt = Jwts.builder()
+        String accessToken = Jwts.builder()
                 // Header : 해쉬 알고리즘, 토큰 타입
                 .setHeaderParam("alg", "HS256")
                 .setHeaderParam("typ", "JWT")
                 // Payload
                 .setClaims(claims)
+                // 만료일 (유효기간)
+                .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(ACCESS_TOKEN_VALID_TIME)))
                 // Signature : secret key를 활용한 암호화
                 .signWith(SignatureAlgorithm.HS256, this.generateKey())
                 .compact(); // 직렬화 처리
 
-        return "Bearer " + jwt;
+        String refreshToken = Jwts.builder()
+                // Header : 해쉬 알고리즘, 토큰 타입
+                .setHeaderParam("alg", "HS256")
+                .setHeaderParam("typ", "JWT")
+                // Payload
+                .setClaims(claims)
+                // 만료일 (유효기간)
+                .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(REFRESH_TOKEN_VALID_TIME)))
+                // Signature : secret key를 활용한 암호화
+                .signWith(SignatureAlgorithm.HS256, this.generateKey())
+                .compact(); // 직렬화 처리
+
+        return JWT.builder().accessToken(accessToken).refreshToken(refreshToken).key(key).build();
     }
 
     // Signature에 사용될 secret key 생성
@@ -92,7 +111,7 @@ public class JwtService {
         log.info("JwtService_validateToken | JWT토큰의 유효성 + 만료일자 확인");
         try {
             Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(this.generateKey()).build().parseClaimsJws(accessToken);
-            if(claims.getBody().getExpiration().getTime() - claims.getBody().getIssuedAt().getTime() != ACCESS_TOKEN_VALID_TIME){
+            if(claims.getBody().getExpiration().getTime() - claims.getBody().getIssuedAt().getTime() != Long.parseLong(ACCESS_TOKEN_VALID_TIME)){
                 log.info("토큰이 유효하지 않음");
                 return false;
             }

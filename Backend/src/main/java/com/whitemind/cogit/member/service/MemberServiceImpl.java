@@ -1,6 +1,7 @@
 package com.whitemind.cogit.member.service;
 
 import com.whitemind.cogit.auth.service.GithubService;
+import com.whitemind.cogit.common.entity.JWT;
 import com.whitemind.cogit.common.util.JwtService;
 import com.whitemind.cogit.member.dto.Member;
 import com.whitemind.cogit.member.repository.MemberRepository;
@@ -20,10 +21,10 @@ public class MemberServiceImpl implements MemberService{
     private final MemberRepository memberRepository;
 
     @Override
-    public void setToken(Long memberId, HttpServletResponse response) {
+    public void setToken(JWT jwt, HttpServletResponse response) {
         log.info("UserServiceImpl_setToken | 사용자 인증 완료 , 토큰 부여");
-        String accessToken = jwtService.createAccessToken("memberId",memberId); // key, value
-        response.setHeader("Authorization", accessToken);
+        response.setHeader("Authorization", "Bearer " + jwt.getAccessToken());
+        response.setHeader("RefreshToken", "Bearer " + jwt.getRefreshToken());
     }
 
     @Override
@@ -31,7 +32,9 @@ public class MemberServiceImpl implements MemberService{
         log.info("UserServiceImple_refreshGithubMember | 사용자 정보 추가 or 갱신");
         String accessToken = githubService.getAccessToken(code);
         Member member = githubService.getGithubUserInfo(accessToken);
+        JWT jwt = jwtService.createAccessToken("memberId",member.getMemberId()); // key, value
+        member.setMemberRefreshToken(jwt.getRefreshToken());
         memberRepository.save(member);
-        setToken(member.getMemberId(), response);
+        setToken(jwt, response);
     }
 }
