@@ -5,27 +5,28 @@ document.addEventListener('DOMContentLoaded', function () {
     const REDIRECT_URL = 'https://github.com/'; // 변경 필요
     const SCOPES = ['repo', 'admin:repo_hook', 'admin:org', 'admin:public_key', 'admin:org_hook', 'user', 'project'];
   
-    function init() {
-      // 초기화 코드
-    }
   
     function login() {
-      init(); // secure token params.
   
       let url = `${AUTHORIZATION_URL}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URL}&scope=`;
-  
       for (let i = 0; i < SCOPES.length; i++) {
-        url += SCOPES[i];
-      }
-  
+          url += SCOPES[i];
+        }
+        
       chrome.storage.local.set({ pipe_cogit: true }, () => {
         // opening pipe temporarily
   
         chrome.tabs.create({ url, selected: true }, function () {
+            const link = window.location.href;
+            chrome.storage.local.get('pipe_cogit', (data) => {
+                if (data && data.pipe_cogit) {
+                    parseAccessCode(link);
+                }
+            });
           window.close();
-          chrome.tabs.getCurrent(function (tab) {
-            // chrome.tabs.remove(tab.id, function () {});
-          });
+        //   chrome.tabs.getCurrent(function (tab) {
+        //     // chrome.tabs.remove(tab.id, function () {});
+        //   });
         });
       });
     }

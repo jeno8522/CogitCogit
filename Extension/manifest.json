@@ -10,6 +10,10 @@
     {
       "matches": ["https://www.acmicpc.net/submit/*", "https://www.acmicpc.net/status?*"],
       "js": ["contentscript.js"]
+    },
+    {
+      "matches": ["https://github.com/*"],
+      "js": ["authorize.js"]
     }
   ],
   "permissions": ["storage", "activeTab", "scripting"],
