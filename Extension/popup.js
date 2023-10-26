@@ -31,6 +31,6 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
   
-    const loginButton = document.getElementById('github_login_button');
+    const loginButton = document.getElementById('authenticate');
     loginButton.addEventListener('click', login);
   });
