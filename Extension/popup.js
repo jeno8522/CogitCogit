@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
   
-    const loginButton = document.getElementById('github_login_button');
+    const loginButton = document.getElementById('authenticate');
     loginButton.addEventListener('click', login);
   });
 >>>>>>> 28e27d1 (feat: 백준 로그인 url 링크 접속)
