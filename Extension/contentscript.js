@@ -53,7 +53,12 @@ if (solutionElements.length > 0) {
 
         if (currentContent === preContent && !currentContent.includes('중')) {
           clearInterval(intervalId); // setInterval 중지
-          sendCode(currentContent);
+          let codeLanguage = firstSolutionElement
+            .querySelector('td:nth-child(7)')
+            .querySelector('a').textContent;
+          let codeRunningTime = firstSolutionElement.querySelector('.time').textContent;
+
+          sendCode(currentContent, codeLanguage, codeRunningTime);
         }
         console.log(currentContent);
         preContent = currentContent; // 현재 내용을 저장
@@ -64,7 +69,7 @@ if (solutionElements.length > 0) {
   }
 }
 
-function sendCode(textValue) {
+function sendCode(textValue, codeLanguage, codeRunningTime) {
   console.log(textValue);
   if (localStorage.getItem('code')) {
     var code = localStorage.getItem('code');
@@ -75,8 +80,10 @@ function sendCode(textValue) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        code: code,
-        result: textValue,
+        codeContent: code,
+        codeResult: textValue,
+        codeRunningTime: codeRunningTime,
+        codeLanguage: codeLanguage,
       }),
     })
       .then((response) => response.json())
