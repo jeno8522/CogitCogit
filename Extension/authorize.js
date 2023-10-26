@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // url 인가코드 파싱
 function parseAccessCode(url) {
   if (url.match(/\?error=(.+)/)) {
@@ -53,3 +54,16 @@ if (window.location.host === "github.com") {
     }
   });
 }
+=======
+document.addEventListener('DOMContentLoaded', function () {
+
+/* Check for open pipe */
+if (window.location.host === 'github.com') {
+    chrome.storage.local.get('pipe_cogit', (data) => {
+      if (data && data.pipe_baekjoonhub) {
+        localAuth.parseAccessCode(link);
+      }
+    });
+  }
+});
+>>>>>>> 28e27d1 (feat: 백준 로그인 url 링크 접속)
