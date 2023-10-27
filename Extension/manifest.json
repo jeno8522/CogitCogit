@@ -12,6 +12,10 @@
       "js": ["contentscript.js"]
     },
     {
+      "matches": ["https://school.programmers.co.kr/learn/courses/30/lessons/*"],
+      "js": ["programmers.js"]
+    },
+    {
       "matches": ["https://github.com/*"],
       "js": ["authorize.js"]
     }
