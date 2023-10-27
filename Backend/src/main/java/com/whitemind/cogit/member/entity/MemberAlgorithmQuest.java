@@ -5,7 +5,7 @@ import com.whitemind.cogit.schedule.entity.Problem;
 import javax.persistence.*;
 
 @Entity
-public class MemberProblem {
+public class MemberAlgorithmQuest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int memberTeamId;
