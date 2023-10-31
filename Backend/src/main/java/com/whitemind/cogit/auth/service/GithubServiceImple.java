@@ -1,7 +1,9 @@
 package com.whitemind.cogit.auth.service;
 
+import com.whitemind.cogit.auth.dto.GitBlobResponseDto;
 import com.whitemind.cogit.auth.dto.GitRefResponseDto;
 import com.whitemind.cogit.code.dto.request.CodeRequest;
+import com.whitemind.cogit.code.entity.Code;
 import com.whitemind.cogit.common.util.JwtService;
 import com.whitemind.cogit.member.dto.UpdateMemberDto;
 import com.whitemind.cogit.member.entity.Member;
@@ -17,6 +19,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Base64;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -97,10 +100,39 @@ public class GithubServiceImple implements GithubService {
 //         그 전에 레포가 있는지 알아야지?
         GitRefResponseDto gitRefResponseDto = getRef(member);
         System.out.println(gitRefResponseDto.getRefSha() + " " + gitRefResponseDto.getRef());
-        // blob 생성
+        getBlob(member, code);
         // treeSha 생성
         // commitSha 생성
         // head 업데이트(푸시)
+    }
+
+    public GitBlobResponseDto getBlob(Member member, CodeRequest code) throws IOException {
+        log.info("getBlob | Github Blob 생성");
+        URL url = new URL("https://api.github.com/repos/" + "hyuntall/Test-GitHub-API" + "/git/blobs");
+        HttpURLConnection conn = (HttpURLConnection)  url.openConnection();
+        conn.setDoInput(true);
+        conn.setDoOutput(true);
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Accept", "application/vnd.github.v3+json");
+        conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36");
+        conn.setRequestProperty("Authorization","Bearer " + member.getMemberGitAccessToken());
+
+        JSONObject jsonRequest = new JSONObject();
+        jsonRequest.put("content", b64EncodeUnicode(code.getCodeContent()));
+        jsonRequest.put("encoding", "base64");
+        System.out.println(b64EncodeUnicode(code.getCodeContent()));
+        // HTTP 요청 body에 JSON 객체 전달
+        try (OutputStream os = conn.getOutputStream()) {
+            byte[] input = jsonRequest.toString().getBytes("utf-8");
+            os.write(input, 0, input.length);
+        }
+
+        int responseCode = conn.getResponseCode();
+        String responseData = getBlobResponse(conn, responseCode);
+        JSONObject jObject = new JSONObject(responseData);
+        System.out.println(jObject.getString("sha"));
+        // TODO 문제 저장할 정확한 주소 정해야함
+        return new GitBlobResponseDto(code.getAlgorithmQuestPlatform() + code.getAlgorithmQuestId(), jObject.getString("sha"), "100644", "blob");
     }
 
     public GitRefResponseDto getRef(Member member) throws IOException {
@@ -130,6 +162,19 @@ public class GithubServiceImple implements GithubService {
 
     }
 
+    private String getBlobResponse(HttpURLConnection conn, int responseCode) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        if (responseCode == 201) {
+            try (InputStream is = conn.getInputStream();
+                 BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+                for (String line = br.readLine(); line != null; line = br.readLine()) {
+                    sb.append(line);
+                }
+            }
+        }
+        return sb.toString();
+    }
+
     private String getResponse(HttpURLConnection conn, int responseCode) throws IOException {
         StringBuilder sb = new StringBuilder();
         if (responseCode == 200) {
@@ -141,5 +186,11 @@ public class GithubServiceImple implements GithubService {
             }
         }
         return sb.toString();
+    }
+
+    public static String b64EncodeUnicode(String input) {
+        byte[] bytes = input.getBytes(); // UTF-8로 인코딩된 바이트 배열 얻기
+        String encoded = Base64.getEncoder().encodeToString(bytes); // base64로 인코딩
+        return encoded;
     }
 }
