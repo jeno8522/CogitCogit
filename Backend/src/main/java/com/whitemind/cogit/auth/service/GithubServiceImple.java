@@ -31,6 +31,7 @@ public class GithubServiceImple implements GithubService {
 
     private final MemberRepository memberRepository;
     private final JwtService jwtService;
+
     /**
      * 유저 accessToken을 사용하여 유저 정보 반환
      * @param accessToken
@@ -94,7 +95,13 @@ public class GithubServiceImple implements GithubService {
     @Override
     public void uploadGitCode(CodeRequest code, HttpServletRequest request) throws Exception {
         Member member = memberRepository.findMembersByMemberId(jwtService.extractMemberIdFromAccessToken(request));
-        // TODO 레포가 존재하는지 확인 필요
+
+        // 레포가 존재하는지 확인
+        if (!getMemberRepo(member)) {
+            log.info("getMemberRepo | 유저 코깃코깃 레포가 존재하지 않습니다.");
+            return;
+        }
+
         GitRefResponseDto gitRefResponseDto = getRef(member);
         // 파일에 대한 Blob 생성
         // TODO 리드미도 생성할 것인지?
@@ -107,16 +114,19 @@ public class GithubServiceImple implements GithubService {
         updateHead(member, gitRefResponseDto.getRef(), commitSha);
     }
 
-    public HttpURLConnection requestGitAPIConnection(Member member, String apiUrl, String Method) throws IOException {
-        URL url = new URL(apiUrl);
+    @Override
+    public boolean getMemberRepo(Member member) throws IOException {
+        log.info("getMemberRepo | 유저 코깃코깃 레포 존재 여부 확인");
+        URL url = new URL("https://api.github.com/repos/" + member.getMemberName() + "/Algorithm_Study_With_Cogit");
         HttpURLConnection conn = (HttpURLConnection)  url.openConnection();
         conn.setDoInput(true);
         conn.setDoOutput(true);
-        conn.setRequestMethod(Method);
-        conn.setRequestProperty("Accept", "application/vnd.github.v3+json");
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Accept", "application/json");
         conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36");
         conn.setRequestProperty("Authorization","Bearer " + member.getMemberGitAccessToken());
-        return conn;
+
+        return conn.getResponseCode() == 200 ? true : false;
     }
 
     public void updateHead(Member member, String ref, String commitSha) throws IOException {
@@ -227,6 +237,18 @@ public class GithubServiceImple implements GithubService {
             }
         }
         return sb.toString();
+    }
+
+    public HttpURLConnection requestGitAPIConnection(Member member, String apiUrl, String Method) throws IOException {
+        URL url = new URL(apiUrl);
+        HttpURLConnection conn = (HttpURLConnection)  url.openConnection();
+        conn.setDoInput(true);
+        conn.setDoOutput(true);
+        conn.setRequestMethod(Method);
+        conn.setRequestProperty("Accept", "application/vnd.github.v3+json");
+        conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36");
+        conn.setRequestProperty("Authorization","Bearer " + member.getMemberGitAccessToken());
+        return conn;
     }
 
     public static String b64EncodeUnicode(String input) {

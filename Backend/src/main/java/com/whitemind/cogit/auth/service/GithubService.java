@@ -11,6 +11,6 @@ import java.net.MalformedURLException;
 public interface GithubService {
     UpdateMemberDto getGithubUserInfo(String accessToken) throws IOException;
     String getAccessToken(String code) throws IOException;
-
     void uploadGitCode(CodeRequest code, HttpServletRequest request) throws Exception;
+    boolean getMemberRepo(Member member) throws IOException;
 }
