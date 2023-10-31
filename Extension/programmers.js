@@ -7,30 +7,29 @@ if (submitButton != null) {
 
 function saveCode() {
   const codeLanguage = document.getElementById('tour7').querySelector('button').textContent.trim();
-  console.log(codeLanguage);
 
   const codeMirrorLines = document.querySelectorAll('.CodeMirror-line');
 
   const linesContent = Array.from(codeMirrorLines).map((line) => line.textContent);
 
-  const contentWithNewlines = linesContent.join('\n');
+  const codeContent = linesContent.join('\n');
 
-  console.log(contentWithNewlines);
-
-  let resultModal = document.querySelector('.modal-title');
-  if (resultModal) {
-    resultModal.textContent = '로딩중';
+  let codeResult = document.querySelector('.modal-title');
+  if (codeResult) {
+    codeResult.textContent = '로딩중';
   }
 
   const intervalId = setInterval(function () {
-    resultModal = document.querySelector('.modal-title').textContent;
-    console.log(resultModal);
+    codeResult = document.querySelector('.modal-title').textContent;
+    var codeRunningTime = 0;
+    var algorithmQuestId = document
+      .querySelector('div.main > div.lesson-content')
+      .getAttribute('data-lesson-id');
 
-    if (resultModal && !resultModal.includes('로딩중')) {
-      console.log(resultModal);
+    if (codeResult && !codeResult.includes('로딩중')) {
       clearInterval(intervalId);
 
-      if (resultModal.includes('정답')) {
+      if (codeResult.includes('정답')) {
         const timeElements = document.querySelectorAll('.console-test-group td.result.passed');
         const runTimes = [];
 
@@ -40,14 +39,17 @@ function saveCode() {
             runTimes.push(parseFloat(runTime[1]));
           }
         }
-        let codeRunningTime = runTimes.reduce((acc, value) => acc + value, 0) / runTimes.length;
-        console.log(codeRunningTime);
-        const algorithmQuestId = document
-          .querySelector('div.main > div.lesson-content')
-          .getAttribute('data-lesson-id');
-
-        console.log(algorithmQuestId);
+        codeRunningTime = runTimes.reduce((acc, value) => acc + value, 0) / runTimes.length;
       }
+
+      sendCode(
+        codeContent,
+        codeResult,
+        'Programmers',
+        codeLanguage,
+        codeRunningTime,
+        algorithmQuestId
+      );
     }
   }, 2000);
 }
