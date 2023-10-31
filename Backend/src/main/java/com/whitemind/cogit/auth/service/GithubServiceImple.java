@@ -99,7 +99,7 @@ public class GithubServiceImple implements GithubService {
         // 레포가 존재하는지 확인
         if (!getMemberRepo(member)) {
             log.info("getMemberRepo | 유저 코깃코깃 레포가 존재하지 않습니다.");
-            return;
+            createRepo(member);
         }
 
         GitRefResponseDto gitRefResponseDto = getRef(member);
@@ -109,29 +109,44 @@ public class GithubServiceImple implements GithubService {
         // treeSha 생성
         String treeSha = getTreeSha(member, gitRefResponseDto.getRefSha(), new GitBlobResponseDto[]{gitCodeBlobResponseDto});
         // commitSha 생성
-        String commitSha = getCommitSha(member, treeSha, gitRefResponseDto.getRefSha());
+        String commitSha = getCommitSha(member, treeSha, gitRefResponseDto.getRefSha(), code);
         // head 업데이트(푸시)
         updateHead(member, gitRefResponseDto.getRef(), commitSha);
+    }
+
+    public void createRepo(Member member) throws IOException {
+        log.info("createRepo | 유저 코깃코깃 레포를 생성합니다.");
+        String url = "https://api.github.com/user/repos";
+        HttpURLConnection conn = requestGitAPIConnection(member, url, "POST");
+
+        JSONObject jsonRequest = new JSONObject();
+        jsonRequest.put("name", "Algorithm_Study_With_Cogit");
+        jsonRequest.put("description", "코깃코깃 소스코드 저장 레포지토리입니다.");
+        jsonRequest.put("private", true);
+        jsonRequest.put("auto_init", true);
+        // HTTP 요청 body에 JSON 객체 전달
+        try (OutputStream os = conn.getOutputStream()) {
+            byte[] input = jsonRequest.toString().getBytes("utf-8");
+            os.write(input, 0, input.length);
+        }
+        int responseCode = conn.getResponseCode();
+        String responseData = getResponse(conn, responseCode, 200);
+        System.out.println(responseCode);
+        System.out.println(responseData);
     }
 
     @Override
     public boolean getMemberRepo(Member member) throws IOException {
         log.info("getMemberRepo | 유저 코깃코깃 레포 존재 여부 확인");
-        URL url = new URL("https://api.github.com/repos/" + member.getMemberName() + "/Algorithm_Study_With_Cogit");
-        HttpURLConnection conn = (HttpURLConnection)  url.openConnection();
-        conn.setDoInput(true);
-        conn.setDoOutput(true);
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Accept", "application/json");
-        conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36");
-        conn.setRequestProperty("Authorization","Bearer " + member.getMemberGitAccessToken());
+        String url = "https://api.github.com/repos/" + member.getMemberName() + "/Algorithm_Study_With_Cogit";
+        HttpURLConnection conn = requestGitAPIConnection(member, url, "GET");
 
         return conn.getResponseCode() == 200 ? true : false;
     }
 
     public void updateHead(Member member, String ref, String commitSha) throws IOException {
         log.info("updateHead | Github Commit Push");
-        String url = "https://api.github.com/repos/" + "hyuntall/Test-GitHub-API" + "/git/" + ref;
+        String url = "https://api.github.com/repos/" + member.getMemberName() + "/Algorithm_Study_With_Cogit/git/" + ref;
         HttpURLConnection conn = requestGitAPIConnection(member, url, "PUT");
 
         JSONObject jsonRequest = new JSONObject();
@@ -143,19 +158,17 @@ public class GithubServiceImple implements GithubService {
             os.write(input, 0, input.length);
         }
 
-        int responseCode = conn.getResponseCode();
-        String responseData = getResponse(conn, responseCode, 200);
-        System.out.println(responseCode);
-        System.out.println(responseData);
+        if (conn.getResponseCode() == 200) log.info("updateHead | 커밋 성공");
+        else log.info("updateHead | 커밋 실패");
     }
 
-    public String getCommitSha(Member member, String treeSha, String refSha) throws IOException {
+    public String getCommitSha(Member member, String treeSha, String refSha, CodeRequest code) throws IOException {
         log.info("getCommitSha | Github Commit SHA 생성");
-        String url = "https://api.github.com/repos/" + "hyuntall/Test-GitHub-API" + "/git/commits";
+        String url = "https://api.github.com/repos/" + member.getMemberName() +"/Algorithm_Study_With_Cogit/git/commits";
         HttpURLConnection conn = requestGitAPIConnection(member, url, "POST");
 
         JSONObject jsonRequest = new JSONObject();
-        jsonRequest.put("message", "test_commit");
+        jsonRequest.put("message", code.getAlgorithmQuestPlatform() + code.getAlgorithmQuestId());
         jsonRequest.put("tree", treeSha);
         jsonRequest.put("parents", new String[]{ refSha });
         // HTTP 요청 body에 JSON 객체 전달
@@ -167,13 +180,12 @@ public class GithubServiceImple implements GithubService {
         int responseCode = conn.getResponseCode();
         String responseData = getResponse(conn, responseCode, 201);
         JSONObject jObject = new JSONObject(responseData);
-        System.out.println(jObject.getString("sha"));
         return jObject.getString("sha");
     }
 
     public String getTreeSha(Member member, String refSha, GitBlobResponseDto[] tree_items) throws IOException {
         log.info("getTreeSha | Github Tree SHA 생성");
-        String url = "https://api.github.com/repos/" + "hyuntall/Test-GitHub-API" + "/git/trees";
+        String url = "https://api.github.com/repos/" + member.getMemberName() +"/Algorithm_Study_With_Cogit/git/trees";
         HttpURLConnection conn = requestGitAPIConnection(member, url, "POST");
 
         JSONObject jsonRequest = new JSONObject();
@@ -193,13 +205,12 @@ public class GithubServiceImple implements GithubService {
 
     public GitBlobResponseDto getBlob(Member member, CodeRequest code) throws IOException {
         log.info("getBlob | Github Blob 생성");
-        String url = "https://api.github.com/repos/" + "hyuntall/Test-GitHub-API" + "/git/blobs";
+        String url = "https://api.github.com/repos/" + member.getMemberName() + "/Algorithm_Study_With_Cogit/git/blobs";
         HttpURLConnection conn = requestGitAPIConnection(member, url, "POST");
 
         JSONObject jsonRequest = new JSONObject();
         jsonRequest.put("content", b64EncodeUnicode(code.getCodeContent()));
         jsonRequest.put("encoding", "base64");
-        System.out.println(b64EncodeUnicode(code.getCodeContent()));
         // HTTP 요청 body에 JSON 객체 전달
         try (OutputStream os = conn.getOutputStream()) {
             byte[] input = jsonRequest.toString().getBytes("utf-8");
@@ -216,7 +227,7 @@ public class GithubServiceImple implements GithubService {
 
     public GitRefResponseDto getRef(Member member) throws IOException {
         log.info("getRef | Github Ref 요청");
-        String url = "https://api.github.com/repos/"+"hyuntall/Test-GitHub-API" + "/git/refs/heads/main";
+        String url = "https://api.github.com/repos/"+ member.getMemberName() +"/Algorithm_Study_With_Cogit/git/refs/heads/main";
         HttpURLConnection conn = requestGitAPIConnection(member, url, "GET");
 
         int responseCode = conn.getResponseCode();
