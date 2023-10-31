@@ -9,7 +9,7 @@ const tMoney = localFont({
       style: 'normal',
     },
     {
-      path: '../assets/fonts/TmoneyRoundWindRegular.otf',
+      path: '../assets/fonts/TmoneyRoundWindExtraBold.otf',
       weight: '700',
       style: 'normal',
     },
