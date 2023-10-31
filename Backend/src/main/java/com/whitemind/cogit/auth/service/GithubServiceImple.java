@@ -3,7 +3,6 @@ package com.whitemind.cogit.auth.service;
 import com.whitemind.cogit.auth.dto.GitBlobResponseDto;
 import com.whitemind.cogit.auth.dto.GitRefResponseDto;
 import com.whitemind.cogit.code.dto.request.CodeRequest;
-import com.whitemind.cogit.code.entity.Code;
 import com.whitemind.cogit.common.util.JwtService;
 import com.whitemind.cogit.member.dto.UpdateMemberDto;
 import com.whitemind.cogit.member.entity.Member;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Base64;
 
@@ -100,10 +98,37 @@ public class GithubServiceImple implements GithubService {
 //         그 전에 레포가 있는지 알아야지?
         GitRefResponseDto gitRefResponseDto = getRef(member);
         System.out.println(gitRefResponseDto.getRefSha() + " " + gitRefResponseDto.getRef());
-        getBlob(member, code);
+        GitBlobResponseDto gitCodeBlobResponseDto = getBlob(member, code);
         // treeSha 생성
+        String treeSha = getTreeSha(member, gitRefResponseDto.getRefSha(), new GitBlobResponseDto[]{gitCodeBlobResponseDto});
         // commitSha 생성
         // head 업데이트(푸시)
+    }
+
+    public String getTreeSha(Member member, String refSha, GitBlobResponseDto[] tree_items) throws IOException {
+        log.info("getTreeSha | Github Tree SHA 생성");
+        URL url = new URL("https://api.github.com/repos/" + "hyuntall/Test-GitHub-API" + "/git/trees");
+        HttpURLConnection conn = (HttpURLConnection)  url.openConnection();
+        conn.setDoInput(true);
+        conn.setDoOutput(true);
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Accept", "application/vnd.github.v3+json");
+        conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36");
+        conn.setRequestProperty("Authorization","Bearer " + member.getMemberGitAccessToken());
+
+        JSONObject jsonRequest = new JSONObject();
+        jsonRequest.put("tree", tree_items);
+        jsonRequest.put("base_tree", refSha);
+        // HTTP 요청 body에 JSON 객체 전달
+        try (OutputStream os = conn.getOutputStream()) {
+            byte[] input = jsonRequest.toString().getBytes("utf-8");
+            os.write(input, 0, input.length);
+        }
+        int responseCode = conn.getResponseCode();
+        String responseData = getBlobResponse(conn, responseCode);
+        JSONObject jObject = new JSONObject(responseData);
+        System.out.println(jObject.getString("sha"));
+        return jObject.getString("sha");
     }
 
     public GitBlobResponseDto getBlob(Member member, CodeRequest code) throws IOException {
