@@ -49,7 +49,7 @@ public class GithubServiceImple implements GithubService {
         conn.setRequestProperty("Authorization","Bearer " + accessToken);
 
         int responseCode = conn.getResponseCode();
-        String responseData = getResponse(conn, responseCode);
+        String responseData = getResponse(conn, responseCode, 200);
         JSONObject jObject = new JSONObject(responseData);
 
         UpdateMemberDto updateMemberDto = new UpdateMemberDto(jObject.getInt("id"), jObject.getString("html_url"), jObject.getString("login"), "", jObject.getString("avatar_url"), accessToken);
@@ -81,7 +81,7 @@ public class GithubServiceImple implements GithubService {
 
         int responseCode = conn.getResponseCode();
 
-        String responseData = getResponse(conn, responseCode);
+        String responseData = getResponse(conn, responseCode, 200);
 
         JSONObject jObject = new JSONObject(responseData);
 
@@ -94,27 +94,77 @@ public class GithubServiceImple implements GithubService {
     @Override
     public void uploadGitCode(CodeRequest code, HttpServletRequest request) throws Exception {
         Member member = memberRepository.findMembersByMemberId(jwtService.extractMemberIdFromAccessToken(request));
-        System.out.println(member.getMemberName());
-//         그 전에 레포가 있는지 알아야지?
+        // TODO 레포가 존재하는지 확인 필요
         GitRefResponseDto gitRefResponseDto = getRef(member);
-        System.out.println(gitRefResponseDto.getRefSha() + " " + gitRefResponseDto.getRef());
+        // 파일에 대한 Blob 생성
+        // TODO 리드미도 생성할 것인지?
         GitBlobResponseDto gitCodeBlobResponseDto = getBlob(member, code);
         // treeSha 생성
         String treeSha = getTreeSha(member, gitRefResponseDto.getRefSha(), new GitBlobResponseDto[]{gitCodeBlobResponseDto});
         // commitSha 생성
+        String commitSha = getCommitSha(member, treeSha, gitRefResponseDto.getRefSha());
         // head 업데이트(푸시)
+        updateHead(member, gitRefResponseDto.getRef(), commitSha);
+    }
+
+    public HttpURLConnection requestGitAPIConnection(Member member, String apiUrl, String Method) throws IOException {
+        URL url = new URL(apiUrl);
+        HttpURLConnection conn = (HttpURLConnection)  url.openConnection();
+        conn.setDoInput(true);
+        conn.setDoOutput(true);
+        conn.setRequestMethod(Method);
+        conn.setRequestProperty("Accept", "application/vnd.github.v3+json");
+        conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36");
+        conn.setRequestProperty("Authorization","Bearer " + member.getMemberGitAccessToken());
+        return conn;
+    }
+
+    public void updateHead(Member member, String ref, String commitSha) throws IOException {
+        log.info("updateHead | Github Commit Push");
+        String url = "https://api.github.com/repos/" + "hyuntall/Test-GitHub-API" + "/git/" + ref;
+        HttpURLConnection conn = requestGitAPIConnection(member, url, "PUT");
+
+        JSONObject jsonRequest = new JSONObject();
+        jsonRequest.put("sha", commitSha);
+        jsonRequest.put("force", true);
+        // HTTP 요청 body에 JSON 객체 전달
+        try (OutputStream os = conn.getOutputStream()) {
+            byte[] input = jsonRequest.toString().getBytes("utf-8");
+            os.write(input, 0, input.length);
+        }
+
+        int responseCode = conn.getResponseCode();
+        String responseData = getResponse(conn, responseCode, 200);
+        System.out.println(responseCode);
+        System.out.println(responseData);
+    }
+
+    public String getCommitSha(Member member, String treeSha, String refSha) throws IOException {
+        log.info("getCommitSha | Github Commit SHA 생성");
+        String url = "https://api.github.com/repos/" + "hyuntall/Test-GitHub-API" + "/git/commits";
+        HttpURLConnection conn = requestGitAPIConnection(member, url, "POST");
+
+        JSONObject jsonRequest = new JSONObject();
+        jsonRequest.put("message", "test_commit");
+        jsonRequest.put("tree", treeSha);
+        jsonRequest.put("parents", new String[]{ refSha });
+        // HTTP 요청 body에 JSON 객체 전달
+        try (OutputStream os = conn.getOutputStream()) {
+            byte[] input = jsonRequest.toString().getBytes("utf-8");
+            os.write(input, 0, input.length);
+        }
+
+        int responseCode = conn.getResponseCode();
+        String responseData = getResponse(conn, responseCode, 201);
+        JSONObject jObject = new JSONObject(responseData);
+        System.out.println(jObject.getString("sha"));
+        return jObject.getString("sha");
     }
 
     public String getTreeSha(Member member, String refSha, GitBlobResponseDto[] tree_items) throws IOException {
         log.info("getTreeSha | Github Tree SHA 생성");
-        URL url = new URL("https://api.github.com/repos/" + "hyuntall/Test-GitHub-API" + "/git/trees");
-        HttpURLConnection conn = (HttpURLConnection)  url.openConnection();
-        conn.setDoInput(true);
-        conn.setDoOutput(true);
-        conn.setRequestMethod("POST");
-        conn.setRequestProperty("Accept", "application/vnd.github.v3+json");
-        conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36");
-        conn.setRequestProperty("Authorization","Bearer " + member.getMemberGitAccessToken());
+        String url = "https://api.github.com/repos/" + "hyuntall/Test-GitHub-API" + "/git/trees";
+        HttpURLConnection conn = requestGitAPIConnection(member, url, "POST");
 
         JSONObject jsonRequest = new JSONObject();
         jsonRequest.put("tree", tree_items);
@@ -124,23 +174,17 @@ public class GithubServiceImple implements GithubService {
             byte[] input = jsonRequest.toString().getBytes("utf-8");
             os.write(input, 0, input.length);
         }
+
         int responseCode = conn.getResponseCode();
-        String responseData = getBlobResponse(conn, responseCode);
+        String responseData = getResponse(conn, responseCode, 201);
         JSONObject jObject = new JSONObject(responseData);
-        System.out.println(jObject.getString("sha"));
         return jObject.getString("sha");
     }
 
     public GitBlobResponseDto getBlob(Member member, CodeRequest code) throws IOException {
         log.info("getBlob | Github Blob 생성");
-        URL url = new URL("https://api.github.com/repos/" + "hyuntall/Test-GitHub-API" + "/git/blobs");
-        HttpURLConnection conn = (HttpURLConnection)  url.openConnection();
-        conn.setDoInput(true);
-        conn.setDoOutput(true);
-        conn.setRequestMethod("POST");
-        conn.setRequestProperty("Accept", "application/vnd.github.v3+json");
-        conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36");
-        conn.setRequestProperty("Authorization","Bearer " + member.getMemberGitAccessToken());
+        String url = "https://api.github.com/repos/" + "hyuntall/Test-GitHub-API" + "/git/blobs";
+        HttpURLConnection conn = requestGitAPIConnection(member, url, "POST");
 
         JSONObject jsonRequest = new JSONObject();
         jsonRequest.put("content", b64EncodeUnicode(code.getCodeContent()));
@@ -153,56 +197,28 @@ public class GithubServiceImple implements GithubService {
         }
 
         int responseCode = conn.getResponseCode();
-        String responseData = getBlobResponse(conn, responseCode);
+        String responseData = getResponse(conn, responseCode, 201);
         JSONObject jObject = new JSONObject(responseData);
-        System.out.println(jObject.getString("sha"));
+
         // TODO 문제 저장할 정확한 주소 정해야함
-        return new GitBlobResponseDto(code.getAlgorithmQuestPlatform() + code.getAlgorithmQuestId(), jObject.getString("sha"), "100644", "blob");
+        return new GitBlobResponseDto(code.getAlgorithmQuestPlatform() + "/" +code.getAlgorithmQuestId(), jObject.getString("sha"), "100644", "blob");
     }
 
     public GitRefResponseDto getRef(Member member) throws IOException {
         log.info("getRef | Github Ref 요청");
-        URL url = new URL("https://api.github.com/repos/"+"hyuntall/taa" + "/git/refs/heads/main");
-        HttpURLConnection conn = (HttpURLConnection)  url.openConnection();
-        conn.setDoInput(true);
-        conn.setDoOutput(true);
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Accept", "application/json");
-        conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36");
-        conn.setRequestProperty("Authorization","Bearer " + member.getMemberGitAccessToken());
+        String url = "https://api.github.com/repos/"+"hyuntall/Test-GitHub-API" + "/git/refs/heads/main";
+        HttpURLConnection conn = requestGitAPIConnection(member, url, "GET");
 
         int responseCode = conn.getResponseCode();
-        String responseData = getResponse(conn, responseCode);
+        String responseData = getResponse(conn, responseCode, 200);
         JSONObject jObject = new JSONObject(responseData);
-        System.out.println(responseData);
+
         return new GitRefResponseDto(jObject.getString("ref"), jObject.getJSONObject("object").getString("sha"));
     }
 
-    /**
-     * 커밋한 내용 git repo에 push
-     * @param ref
-     * @param commitSHA
-     */
-    public void updateHead(String ref, String commitSHA) {
-
-    }
-
-    private String getBlobResponse(HttpURLConnection conn, int responseCode) throws IOException {
+    private String getResponse(HttpURLConnection conn, int responseCode, int validCode) throws IOException {
         StringBuilder sb = new StringBuilder();
-        if (responseCode == 201) {
-            try (InputStream is = conn.getInputStream();
-                 BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
-                for (String line = br.readLine(); line != null; line = br.readLine()) {
-                    sb.append(line);
-                }
-            }
-        }
-        return sb.toString();
-    }
-
-    private String getResponse(HttpURLConnection conn, int responseCode) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        if (responseCode == 200) {
+        if (responseCode == validCode) {
             try (InputStream is = conn.getInputStream();
                  BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
                 for (String line = br.readLine(); line != null; line = br.readLine()) {
