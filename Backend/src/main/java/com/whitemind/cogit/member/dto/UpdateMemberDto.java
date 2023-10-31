@@ -24,7 +24,7 @@ public class UpdateMemberDto {
 
     private String memberRefreshToken;
 
-    private String memberGitAvatarUrl;
+    private String memberProfileImage;
 
     private String memberGitAccessToken;
 
@@ -38,7 +38,7 @@ public class UpdateMemberDto {
                 .memberGitUrl(memberGitUrl)
                 .memberName(memberName)
                 .memberRefreshToken(memberRefreshToken)
-                .memberGitAvatarUrl(memberGitAvatarUrl)
+                .memberProfileImage(memberProfileImage)
                 .memberGitAccessToken(memberGitAccessToken)
                 .codeList(new ArrayList<>())
                 .commentList(new ArrayList<>())

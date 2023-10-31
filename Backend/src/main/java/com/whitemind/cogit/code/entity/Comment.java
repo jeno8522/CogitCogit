@@ -14,22 +14,23 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @SuperBuilder(toBuilder = true)
-@Table(name = "comment")
+@Table(name = "comment", indexes = @Index(name = "idx_code_member", columnList = "code_id, member_id"))
 public class Comment extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int commentId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "code_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT)),
-            @JoinColumn(name = "code_line_number", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    })
+    @JoinColumn(name = "code_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Code code;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Member member;
 
+    @Column(nullable = false, length = 512)
     private String commentContent;
+
+    @Column(nullable = false)
+    private int commentLineNumber;
 }

@@ -1,9 +1,7 @@
 package com.whitemind.cogit.schedule.entity;
 
 import com.whitemind.cogit.code.entity.Code;
-import com.whitemind.cogit.code.entity.Comment;
 import com.whitemind.cogit.common.entity.BaseEntity;
-import com.whitemind.cogit.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,16 +15,17 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @SuperBuilder(toBuilder = true)
-@Table(name = "problem")
-public class Problem extends BaseEntity {
+@Table(name = "algorithm_quest")
+public class AlgorithmQuest {
     @EmbeddedId
-    private ProblemCompositeKey problemCompositeKey;
+    private AlgorithmQuestCompositeKey algorithmQuestCompositeKey;
 
-    @OneToMany(mappedBy = "problem")
+    @OneToMany(mappedBy = "algorithmQuest")
     private List<Code> codeList;
 
-    @OneToMany(mappedBy = "problem")
-    private List<ScheduleProblem> scheduleProblemList;
+    @OneToMany(mappedBy = "algorithmQuest")
+    private List<ScheduleAlgorithmQuest> scheduleAlgorithmQuestList;
 
-    private String problemUrl;
+    @Column(nullable = false, length = 512)
+    private String algorithmQuestUrl;
 }
