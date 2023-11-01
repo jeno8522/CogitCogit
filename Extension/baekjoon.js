@@ -64,9 +64,8 @@ if (solutionElements.length > 0) {
                 codeLanguage,
                 codeRunningTime,
                 algorithmQuestId
-              ) == true;
+              );
 
-              console.log('return true');
               if (currentContent.includes('맞았습니다')) {
                 var cogitImg = document.createElement('img');
                 cogitImg.src =
