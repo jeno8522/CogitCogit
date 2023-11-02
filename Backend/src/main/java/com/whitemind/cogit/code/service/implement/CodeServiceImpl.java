@@ -11,7 +11,6 @@ import com.whitemind.cogit.member.repository.MemberRepository;
 import com.whitemind.cogit.schedule.entity.AlgorithmQuest;
 import com.whitemind.cogit.schedule.entity.AlgorithmQuestCompositeKey;
 import com.whitemind.cogit.schedule.entity.AlgorithmQuestPlatform;
-import com.whitemind.cogit.schedule.repository.AlgorithmQuestRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

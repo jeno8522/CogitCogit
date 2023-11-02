@@ -1,6 +1,5 @@
 package com.whitemind.cogit.member.controller;
 
-import com.nimbusds.oauth2.sdk.http.HTTPResponse;
 import com.whitemind.cogit.common.response.ListResponseResult;
 import com.whitemind.cogit.common.response.ResponseResult;
 import com.whitemind.cogit.member.dto.UpdateMemberNicknameDto;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 @RestController

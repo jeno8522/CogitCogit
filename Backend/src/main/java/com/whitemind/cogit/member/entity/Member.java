@@ -1,15 +1,12 @@
 package com.whitemind.cogit.member.entity;
 
-import com.sun.istack.NotNull;
 import com.whitemind.cogit.code.entity.Code;
 import com.whitemind.cogit.code.entity.Comment;
-import com.whitemind.cogit.common.entity.BaseEntity;
 import com.whitemind.cogit.member.dto.GetMemberListDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
@@ -24,7 +21,6 @@ import java.util.List;
 @Table(name = "member")
 public class Member {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int memberId;
 
     @Column(nullable = false, length = 320)
