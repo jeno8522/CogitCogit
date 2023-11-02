@@ -23,6 +23,7 @@ import java.util.List;
 @Table(name = "member")
 public class Member {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int memberId;
 
     @Column(nullable = false, length = 320)
