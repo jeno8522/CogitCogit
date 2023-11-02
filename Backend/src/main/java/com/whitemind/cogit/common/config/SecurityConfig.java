@@ -1,38 +1,58 @@
 package com.whitemind.cogit.common.config;
 
+import com.whitemind.cogit.common.jwt.JwtExceptionFilter;
+import com.whitemind.cogit.common.jwt.JwtFilter;
+import com.whitemind.cogit.common.jwt.JwtService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
+
 
 @Configuration
+@RequiredArgsConstructor
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .cors().configurationSource(corsConfigurationSource())
-                .and()
+    private final JwtService jwtService;
+    private final JwtExceptionFilter jwtExceptionFilter;
+    private final CorsConfig corsConfig;
+
+    @Value("${JWT_SECRET_KEY}")
+    private String secretKey;
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity
+                .addFilter(corsConfig.corsFilter())
+                .httpBasic().disable()
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/auth/**").permitAll() // 해당 경로는 JWT 검사에서 제외
+                .antMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated()
-                .and().httpBasic(); // 다른 모든 요청에는 JWT 검사가 적용됨
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilterBefore(new JwtFilter(jwtService, secretKey), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtExceptionFilter, JwtFilter.class)
+                .build();
     }
 
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
+    @Bean
+    public HttpFirewall getHttpFirewall() {
+        StrictHttpFirewall strictHttpFirewall = new StrictHttpFirewall();
+        strictHttpFirewall.setAllowUrlEncodedSlash(true);
+        strictHttpFirewall.setAllowBackSlash(true);
+        strictHttpFirewall.setAllowUrlEncodedDoubleSlash(true);
 
-        configuration.addAllowedOriginPattern("*");
-        configuration.addAllowedHeader("*");
-        configuration.addAllowedMethod("*");
-        configuration.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
+        return strictHttpFirewall;
     }
 }
