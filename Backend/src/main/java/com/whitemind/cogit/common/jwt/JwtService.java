@@ -69,8 +69,7 @@ public class JwtService {
                 // Payload
                 .setClaims(claims)
                 // 만료일 (유효기간)
-                .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(ACCESS_TOKEN_VALID_TIME)))
-//                .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(ACCESS_TOKEN_VALID_TIME) * 1000L))
+                .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(ACCESS_TOKEN_VALID_TIME) * 1000L))
                 // Signature : secret key를 활용한 암호화
                 .signWith(SignatureAlgorithm.HS256, this.generateKey())
                 .compact(); // 직렬화 처리
@@ -106,7 +105,6 @@ public class JwtService {
     public Integer extractMemberIdFromAccessToken(HttpServletRequest request) throws Exception {
         log.info("JwtService_extractUserIdFromAccessToken | Access Token 에서 userCI 추출");
         String accessToken = request.getHeader("Authorization");
-        System.out.println(accessToken);
         if(accessToken == null)
             throw new Exception();
 
@@ -142,7 +140,7 @@ public class JwtService {
         log.info("JwtService_refreshAccessToken | AccessToken 재발급");
         //TODO: member 없을 때 예외처리
         Member member = memberRepository.findMembersByMemberRefreshToken(refreshToken.split(" ")[1]);
-        System.out.println(member.getMemberId() + " 확인용");
+
         Claims claims = Jwts.claims()
                 // 토큰 제목 access-token/refresh-token
                 .setSubject("access-token")
