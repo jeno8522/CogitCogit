@@ -13,7 +13,7 @@
     },
     {
       "matches": ["https://school.programmers.co.kr/learn/courses/30/lessons/*"],
-      "js": ["programmers.js", "sendCode.js", "authorize.js"]
+      "js": ["programmers.js", "programmersLanguage.js", "sendCode.js", "authorize.js"]
     },
     {
       "matches": ["https://github.com/*"],
