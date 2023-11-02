@@ -24,13 +24,13 @@ public class MemberController {
     public ResponseResult refreshUpdateMemberNicknameRequest(@RequestBody UpdateMemberNicknameDto updateMemberNicknameDto, HttpServletRequest request) throws Exception {
         log.info("refreshModifyMemberNicknameRequest | Member Nickname 변경 요청");
         memberService.modifyNickname(updateMemberNicknameDto.getMemberNickname(), request);
-        return new SingleResponseResult<>(HTTPResponse.SC_OK);
+        return ResponseResult.successResponse;
     }
 
     @PatchMapping("/image")
     public ResponseResult refreshUpdateMemberImageRequest(@RequestParam MultipartFile imageFile, HttpServletRequest request) throws Exception {
         log.info("refreshUpdateMemberImageRequest | Member ProfileImage 변경 요청");
         memberService.modifyProfileImage(imageFile, request);
-        return new SingleResponseResult<>(HTTPResponse.SC_OK);
+        return ResponseResult.successResponse;
     }
 }
