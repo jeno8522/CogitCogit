@@ -87,7 +87,8 @@ if (solutionElements.length > 0) {
                 codeLanguage,
                 codeRunningTime,
                 algorithmQuestId,
-                codeFileExtension
+                codeFileExtension,
+                `${PLATFORM_URL}${algorithmQuestId}`
               );
             }
           }
