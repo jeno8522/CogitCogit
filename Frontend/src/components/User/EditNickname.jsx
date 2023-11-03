@@ -33,7 +33,7 @@ function EditNickname({ isOpen, onClose }) {
               </Input.Wrapper>
             </Input>
             <Button
-              className="text-white bg-primary rounded-small w-1/3"
+              className="text-white bg-hover rounded-small w-1/3"
               onClick={onClickChangeNickname}
             >
               확인
