@@ -16,6 +16,7 @@ function EditNickname({ isOpen, onClose }) {
 
   return (
     <Modal isOpen={isOpen}>
+    <Modal.Dimmed>
       <Modal.Container className="shadow-2xl bg-background" width="30vw" height="50vh">
         <Modal.Close onClick={onClickClose} />
         <div className="flex flex-col items-center justify-between w-full h-1/2">
@@ -41,6 +42,7 @@ function EditNickname({ isOpen, onClose }) {
           </div>
         </div>
       </Modal.Container>
+      </Modal.Dimmed>
     </Modal>
   );
 }
