@@ -2,12 +2,21 @@
 
 import React, { useState } from 'react';
 import ProfileMenu from './ProfileMenu';
+import EditNickname from './EditNickname';
+
 
 function Profile() {
   const [showMenu, setMenu] = useState(false);
+  const [showEditNickname, setShowEditNickname] = useState(false);
+
 
   const onClick = () => {
     setMenu((prev) => !prev);  
+  };
+
+  const onClickEditNickname = () => {
+    setShowEditNickname((prev) => !prev);
+    setMenu((prev) => !prev);
   };
 
   return (
@@ -16,8 +25,12 @@ function Profile() {
         <span className="relative mb-1">닉</span>
       </button>
       {showMenu && (
-        <ProfileMenu onCloseMenu={() => setMenu(false)} />
+        <ProfileMenu onClickEditNickname={onClickEditNickname} onCloseMenu={() => setMenu(false)} />
       )}
+      {showEditNickname && (
+        <EditNickname isOpen={showEditNickname} onClose={() => setShowEditNickname(false)} />
+      )}
+
     </div>
   );
 }

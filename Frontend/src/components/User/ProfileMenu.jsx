@@ -2,7 +2,11 @@ import { createPortal } from 'react-dom';
 
 import React from "react";
 
-function ProfileMenu({ onCloseMenu }) {
+function ProfileMenu({ onClickEditNickname, onCloseMenu }) {
+    
+    const onClickEdit = () => {
+        onClickEditNickname();
+      };
     
     const onClickBackGround = () => {
         onCloseMenu();
@@ -35,8 +39,7 @@ function ProfileMenu({ onCloseMenu }) {
               <div className="text-lg text-center">안녕하세요. 닉님</div>
             </div>
             <div>
-              {/* <button className="w-full p-2 hover:bg-hover" onClick={onClickEdit}> */}
-              <button className="w-full p-2 hover:bg-hover">
+              <button className="w-full p-2 hover:bg-hover" onClick={onClickEdit}>
                 닉네임 변경
               </button>
               {/* <button className="w-full p-2 hover:bg-hover" onClick={onClickMyReport}> */}
