@@ -2,7 +2,7 @@ package com.whitemind.cogit.member.entity;
 
 import com.whitemind.cogit.code.entity.Code;
 import com.whitemind.cogit.code.entity.Comment;
-import com.whitemind.cogit.member.dto.GetMemberListDto;
+import com.whitemind.cogit.member.dto.response.GetMemberListResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -60,8 +60,8 @@ public class Member {
         this.memberProfileImage = memberProfileImage;
     }
 
-    public GetMemberListDto toGetMemberListDto() {
-        return GetMemberListDto.builder()
+    public GetMemberListResponse toGetMemberListResponse() {
+        return GetMemberListResponse.builder()
                 .memberId(memberId)
                 .memberGitUrl(memberGitUrl)
                 .memberNickname(memberNickname)

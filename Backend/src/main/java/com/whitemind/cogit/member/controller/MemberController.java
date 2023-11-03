@@ -2,7 +2,7 @@ package com.whitemind.cogit.member.controller;
 
 import com.whitemind.cogit.common.response.ListResponseResult;
 import com.whitemind.cogit.common.response.ResponseResult;
-import com.whitemind.cogit.member.dto.UpdateMemberNicknameDto;
+import com.whitemind.cogit.member.dto.request.UpdateMemberNicknameRequest;
 import com.whitemind.cogit.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,9 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 public class MemberController {
     private final MemberService memberService;
     @PatchMapping("/nickname")
-    public ResponseResult refreshUpdateMemberNicknameRequest(@RequestBody UpdateMemberNicknameDto updateMemberNicknameDto, HttpServletRequest request) throws Exception {
+    public ResponseResult refreshUpdateMemberNicknameRequest(@RequestBody UpdateMemberNicknameRequest updateMemberNicknameRequest, HttpServletRequest request) throws Exception {
         log.info("refreshModifyMemberNicknameRequest | Member Nickname 변경 요청");
-        memberService.modifyNickname(updateMemberNicknameDto.getMemberNickname(), request);
+        memberService.modifyNickname(updateMemberNicknameRequest.getMemberNickname(), request);
         return ResponseResult.successResponse;
     }
 
