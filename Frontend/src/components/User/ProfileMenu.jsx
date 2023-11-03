@@ -2,15 +2,23 @@ import { createPortal } from 'react-dom';
 
 import React from "react";
 
-function ProfileMenu({ onClickEditNickname, onCloseMenu }) {
+function ProfileMenu({ onClickEditNickname, onCloseMenu, onClickLogoutModal}) {
     
     const onClickEdit = () => {
         onClickEditNickname();
       };
+
+    const onClickLogout = () => {
+        onClickLogoutModal();
+    };
     
+    const onClickRepo = () => {
+        window.open('https://cogit.kr');
+    };
+
     const onClickBackGround = () => {
         onCloseMenu();
-      };
+    };
 
       
     return (
@@ -42,12 +50,10 @@ function ProfileMenu({ onClickEditNickname, onCloseMenu }) {
               <button className="w-full p-2 hover:bg-hover" onClick={onClickEdit}>
                 닉네임 변경
               </button>
-              {/* <button className="w-full p-2 hover:bg-hover" onClick={onClickMyReport}> */}
-              <button className="w-full p-2 hover:bg-hover">
+              <button className="w-full p-2 hover:bg-hover" onClick={onClickRepo}>
                   내 레포지토리
               </button>
-              {/* <button className="w-full p-2 hover:bg-hover" onClick={onClickLogout}> */}
-              <button className="w-full p-2 hover:bg-warning">
+              <button className="w-full p-2 hover:bg-warning" onClick={onClickLogout}>
                 로그아웃
               </button>
             </div>
