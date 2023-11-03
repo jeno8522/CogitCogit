@@ -20,7 +20,6 @@ function ProfileMenu({ onClickEditNickname, onCloseMenu, onClickLogoutModal}) {
         onCloseMenu();
     };
 
-      
     return (
         <>
           <div className="absolute py-4 top-16 right-7 bg-background w-[370px] rounded-small shadow-lg z-50">
