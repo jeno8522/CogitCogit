@@ -1,9 +1,7 @@
 package com.whitemind.cogit.member.controller;
 
-import com.nimbusds.oauth2.sdk.http.HTTPResponse;
+import com.whitemind.cogit.common.response.ListResponseResult;
 import com.whitemind.cogit.common.response.ResponseResult;
-import com.whitemind.cogit.common.response.SingleResponseResult;
-import com.whitemind.cogit.member.dto.UpdateMemberImageDto;
 import com.whitemind.cogit.member.dto.UpdateMemberNicknameDto;
 import com.whitemind.cogit.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 @RestController
@@ -32,5 +29,11 @@ public class MemberController {
         log.info("refreshUpdateMemberImageRequest | Member ProfileImage 변경 요청");
         memberService.modifyProfileImage(imageFile, request);
         return ResponseResult.successResponse;
+    }
+
+    @GetMapping("/list")
+    public ListResponseResult getMemberListRequest() {
+        log.info("getMemberListRequest | Member 전체 리스트 조회");
+        return new ListResponseResult(memberService.getMemberList());
     }
 }
