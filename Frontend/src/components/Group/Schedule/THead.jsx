@@ -9,7 +9,7 @@ const THead = () => {
       <thead>
         <tr className="bg-gray-800">
           {questions.map((question) => {
-            return <Th key={question} />;
+            return <Th question={question} />;
           })}
         </tr>
       </thead>
