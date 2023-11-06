@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,9 @@ public class ScheduleServiceImpl implements ScheduleService{
     private final MemberAlgorithmQuestRepository memberAlgorithmQuestRepository;
 
     @Override
+    @Transactional
     public void createSchedule(CreateScheduleRequest scheduleRequest, HttpServletRequest request) {
+
         Team study = teamRepository.findById(scheduleRequest.getStudyId())
                 .orElseThrow(() -> new CustomException(ExceptionCode.NOT_EXIST_TEAM_EXCEPTION));
 
@@ -52,9 +55,16 @@ public class ScheduleServiceImpl implements ScheduleService{
         for (String questUrl : scheduleRequest.getAlgorithmQuestList()){
             String [] questNumber = questUrl.split("/");
 
-            String url = questNumber[questNumber.length - 1];
+            String number = questNumber[questNumber.length - 1];
+
+            // 문제 URL 이상 여부 판단
+            if (!(questUrl.contains("programmers") || questUrl.contains("acmicpc")))
+                throw new CustomException(ExceptionCode.NOT_EXIST_ALGORITHM_PLATFORM_EXCEPTION);
+
+
+
             AlgorithmQuest algorithmQuest = AlgorithmQuest.builder()
-                    .algorithmQuestNumber(Integer.parseInt(url))
+                    .algorithmQuestNumber(Integer.parseInt(number))
                     .algorithmQuestUrl(questUrl)
                     .algorithmQuestPlatform((questUrl.contains("programmers") ? AlgorithmQuestPlatform.PROGRAMMERS : AlgorithmQuestPlatform.BAEKJOON))
                     .schedule(schedule)
