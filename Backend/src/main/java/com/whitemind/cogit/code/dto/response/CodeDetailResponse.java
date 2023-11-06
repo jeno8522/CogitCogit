@@ -1,15 +1,13 @@
 package com.whitemind.cogit.code.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
+@Getter
 public class CodeDetailResponse {
     private int codeId;
     private int algorithmQuestId;
