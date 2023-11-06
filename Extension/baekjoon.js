@@ -1,3 +1,5 @@
+const PLATFORM_URL = 'https://www.acmicpc.net/problem/';
+
 const submitButton = document.getElementById('submit_button');
 if (submitButton != null) {
   submitButton.addEventListener('click', function () {
@@ -65,7 +67,8 @@ if (solutionElements.length > 0) {
                 codeLanguage,
                 codeRunningTime,
                 algorithmQuestId,
-                codeFileExtension
+                codeFileExtension,
+                `${PLATFORM_URL}${algorithmQuestId}`
               );
               var cogitImg = document.createElement('img');
               cogitImg.src =
@@ -84,7 +87,8 @@ if (solutionElements.length > 0) {
                 codeLanguage,
                 codeRunningTime,
                 algorithmQuestId,
-                codeFileExtension
+                codeFileExtension,
+                `${PLATFORM_URL}${algorithmQuestId}`
               );
             }
           }

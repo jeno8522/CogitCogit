@@ -1,3 +1,6 @@
+const PLATFORM_URL =
+  'https://school.programmers.co.kr/learn/courses/30/lessons/';
+
 const submitButton = document.getElementById('submit-code');
 if (submitButton != null) {
   submitButton.addEventListener('click', function () {
@@ -60,7 +63,8 @@ function saveCode() {
         codeLanguage,
         codeRunningTime,
         algorithmQuestId,
-        codeFileExtension
+        codeFileExtension,
+        `${PLATFORM_URL}${algorithmQuestId}`
       );
     }
   }, 2000);
