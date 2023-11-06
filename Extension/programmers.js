@@ -6,12 +6,17 @@ if (submitButton != null) {
 }
 
 function saveCode() {
-  let codeLanguage = document.getElementById('tour7').querySelector('button').textContent.trim();
-  codeLanguage = programmersLanguages[codeLanguage];
+  let codeLanguage = document
+    .getElementById('tour7')
+    .querySelector('button')
+    .textContent.trim();
   let codeFileExtension = programmersExtension[codeLanguage];
+  codeLanguage = programmersLanguages[codeLanguage];
 
   const codeMirrorLines = document.querySelectorAll('.CodeMirror-line');
-  const linesContent = Array.from(codeMirrorLines).map((line) => line.textContent);
+  const linesContent = Array.from(codeMirrorLines).map(
+    (line) => line.textContent
+  );
   const codeContent = linesContent.join('\n');
 
   let codeResult = document.querySelector('.modal-title');
@@ -32,7 +37,9 @@ function saveCode() {
       let result = false;
 
       if (codeResult.includes('정답')) {
-        const timeElements = document.querySelectorAll('.console-test-group td.result.passed');
+        const timeElements = document.querySelectorAll(
+          '.console-test-group td.result.passed'
+        );
         const runTimes = [];
 
         for (var timeElement of timeElements) {
@@ -41,7 +48,8 @@ function saveCode() {
             runTimes.push(parseFloat(runTime[1]));
           }
         }
-        codeRunningTime = runTimes.reduce((acc, value) => acc + value, 0) / runTimes.length;
+        codeRunningTime =
+          runTimes.reduce((acc, value) => acc + value, 0) / runTimes.length;
         result = true;
       }
 

@@ -8,7 +8,9 @@ if (submitButton != null) {
 function saveCode() {
   const codeMirrorLines = document.querySelectorAll('.CodeMirror-line');
 
-  const linesContent = Array.from(codeMirrorLines).map((line) => line.textContent);
+  const linesContent = Array.from(codeMirrorLines).map(
+    (line) => line.textContent
+  );
 
   const contentWithNewlines = linesContent.join('\n');
 
@@ -44,9 +46,10 @@ if (solutionElements.length > 0) {
             .querySelector('td:nth-child(7)')
             .querySelector('a')
             .textContent.trim();
-          codeLanguage = baekjoonLanguages[codeLanguage];
           let codeFileExtension = baekjoonExtension[codeLanguage];
-          let codeRunningTime = firstSolutionElement.querySelector('.time').textContent;
+          codeLanguage = baekjoonLanguages[codeLanguage];
+          let codeRunningTime =
+            firstSolutionElement.querySelector('.time').textContent;
           let algorithmQuestId = firstSolutionElement
             .querySelector('td:nth-child(3)')
             .querySelector('a').textContent;
@@ -65,7 +68,8 @@ if (solutionElements.length > 0) {
                 codeFileExtension
               );
               var cogitImg = document.createElement('img');
-              cogitImg.src = 'https://cogitusercode.s3.ap-northeast-2.amazonaws.com/cogit.PNG';
+              cogitImg.src =
+                'https://cogitusercode.s3.ap-northeast-2.amazonaws.com/cogit.PNG';
               cogitImg.style = 'width:20px';
               spanElement.appendChild(cogitImg);
             } else if (
