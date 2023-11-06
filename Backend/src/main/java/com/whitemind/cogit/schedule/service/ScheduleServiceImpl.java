@@ -8,7 +8,9 @@ import com.whitemind.cogit.member.entity.Team;
 import com.whitemind.cogit.member.repository.MemberAlgorithmQuestRepository;
 import com.whitemind.cogit.member.repository.MemberRepository;
 import com.whitemind.cogit.member.repository.TeamRepository;
+import com.whitemind.cogit.schedule.dto.GetScheduleDto;
 import com.whitemind.cogit.schedule.dto.request.CreateScheduleRequest;
+import com.whitemind.cogit.schedule.dto.response.GetStudyDetailResponse;
 import com.whitemind.cogit.schedule.entity.AlgorithmQuest;
 import com.whitemind.cogit.schedule.entity.AlgorithmQuestPlatform;
 import com.whitemind.cogit.schedule.entity.Schedule;
@@ -77,5 +79,32 @@ public class ScheduleServiceImpl implements ScheduleService{
                     .build();
             memberAlgorithmQuestRepository.save(memberAlgorithmQuest);
         }
+    }
+
+    @Override
+    public GetStudyDetailResponse getStudyDetail(int teamId, HttpServletRequest request) {
+        Team team = teamRepository.findById(teamId)
+            .orElseThrow(()->new CustomException(ExceptionCode.NOT_EXIST_TEAM_EXCEPTION));
+
+        List<Schedule> schedules = scheduleRepository.findTop5ByTeamTeamIdOrderByScheduleEndAtDesc(teamId);
+
+        List<GetScheduleDto> getSchedules = new ArrayList<>();
+
+        for (Schedule schedule: schedules) {
+            GetScheduleDto getSchedule = GetScheduleDto.builder()
+                .scheduleId(schedule.getScheduleId())
+                .scheduleName(schedule.getScheduleName())
+                .scheduleStartAt(schedule.getScheduleStartAt())
+                .scheduleEndAt(schedule.getScheduleEndAt())
+                .build();
+            getSchedules.add(getSchedule);
+        }
+
+        GetStudyDetailResponse getStudyDetailResponse = GetStudyDetailResponse.builder()
+            .teamId(team.getTeamId())
+            .teamName(team.getTeamName())
+            .scheduleList(getSchedules)
+            .build();
+        return getStudyDetailResponse;
     }
 }
