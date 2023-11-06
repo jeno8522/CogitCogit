@@ -131,6 +131,7 @@ public class CodeServiceImpl implements CodeService {
                 .algorithmQuestId(code.getAlgorithmQuest().getAlgorithmQuestId())
                 .codeContent(code.getCodeContent())
                 .memberId(code.getMember().getMemberId())
+                .algorithmQuestPlatform(code.getAlgorithmQuest().getAlgorithmQuestPlatform().toString())
                 .createAt(LocalDate.from(code.getCreatedAt()))
                 .codeAnalyze(code.getCodeAnalyze())
                 .codeLanguage(code.getLanguage())
