@@ -29,7 +29,8 @@ export default function RootLayout({ children }) {
       <body>
         <Header />
         <Sidebar />
-        {children}</body>
+        {children}
+      </body>
     </html>
   );
 }
