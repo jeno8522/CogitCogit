@@ -57,7 +57,7 @@ public class ScheduleServiceImpl implements ScheduleService{
         scheduleRepository.save(schedule);
 
 
-        Member member = memberRepository.findMembersByMemberId((Integer) request.getAttribute("memberId"));
+        // Member member = memberRepository.findMembersByMemberId((Integer) request.getAttribute("memberId"));
 
         // 해당 스케줄에 각 문제 등록
         for (String questUrl : scheduleRequest.getAlgorithmQuestList()){
@@ -79,11 +79,14 @@ public class ScheduleServiceImpl implements ScheduleService{
                     .build();
             algorithmQuestRepository.save(algorithmQuest);
 
-            MemberAlgorithmQuest memberAlgorithmQuest = MemberAlgorithmQuest.builder()
-                    .algorithmQuest(algorithmQuest)
-                    .member(member)
-                    .build();
-            memberAlgorithmQuestRepository.save(memberAlgorithmQuest);
+            List<MemberTeam> memberTeams = memberTeamRepository.findByTeamTeamId(scheduleRequest.getStudyId());
+            for (MemberTeam memberTeam: memberTeams) {
+                MemberAlgorithmQuest memberAlgorithmQuest = MemberAlgorithmQuest.builder()
+                        .algorithmQuest(algorithmQuest)
+                        .member(memberTeam.getMember())
+                        .build();
+                memberAlgorithmQuestRepository.save(memberAlgorithmQuest);
+            }
         }
     }
 
