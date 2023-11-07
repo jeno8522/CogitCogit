@@ -4,7 +4,7 @@ function sendCode(
   algorithmQuestPlatform,
   codeLanguage,
   codeRunningTime,
-  algorithmQuestId,
+  algorithmQuestNumber,
   codeFileExtension,
   algorithmQuestUrl
 ) {
@@ -31,7 +31,7 @@ function sendCode(
         },
         body: JSON.stringify({
           algorithmQuestPlatform: algorithmQuestPlatform,
-          algorithmQuestId: algorithmQuestId,
+          algorithmQuestNumber: algorithmQuestNumber,
           codeContent: codeContent,
           codeSolved: codeSolved,
           codeRunningTime: codeRunningTime,

@@ -30,7 +30,7 @@ function saveCode() {
   const intervalId = setInterval(function () {
     codeResult = document.querySelector('.modal-title').textContent;
     var codeRunningTime = 0;
-    var algorithmQuestId = document
+    var algorithmQuestNumber = document
       .querySelector('div.main > div.lesson-content')
       .getAttribute('data-lesson-id');
 
@@ -62,9 +62,9 @@ function saveCode() {
         'PROGRAMMERS',
         codeLanguage,
         codeRunningTime,
-        algorithmQuestId,
+        algorithmQuestNumber,
         codeFileExtension,
-        `${PLATFORM_URL}${algorithmQuestId}`
+        `${PLATFORM_URL}${algorithmQuestNumber}`
       );
     }
   }, 2000);
