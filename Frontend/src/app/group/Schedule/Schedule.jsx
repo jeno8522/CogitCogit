@@ -7,11 +7,12 @@ const Schedule = () => {
   return (
     <Section
       style={{
-        width: '40%',
+        width: '60%',
         height: '500px',
         display: 'inline-block',
         padding: '10px 20px 30px 20px',
-        margin: '20px 10px 20px 10px',
+        margin: '20px 10px 20px 0px',
+        overflow: 'auto',
       }}
     >
       <div className="flex justify-between mb-5">
