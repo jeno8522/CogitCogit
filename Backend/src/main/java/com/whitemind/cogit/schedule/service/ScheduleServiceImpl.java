@@ -4,12 +4,16 @@ import com.whitemind.cogit.common.error.CustomException;
 import com.whitemind.cogit.common.error.ExceptionCode;
 import com.whitemind.cogit.member.entity.Member;
 import com.whitemind.cogit.member.entity.MemberAlgorithmQuest;
+import com.whitemind.cogit.member.entity.MemberTeam;
 import com.whitemind.cogit.member.entity.Team;
 import com.whitemind.cogit.member.repository.MemberAlgorithmQuestRepository;
 import com.whitemind.cogit.member.repository.MemberRepository;
+import com.whitemind.cogit.member.repository.MemberTeamRepository;
 import com.whitemind.cogit.member.repository.TeamRepository;
+import com.whitemind.cogit.schedule.dto.GetMemberAlgorithmQuestDto;
 import com.whitemind.cogit.schedule.dto.GetScheduleDto;
 import com.whitemind.cogit.schedule.dto.request.CreateScheduleRequest;
+import com.whitemind.cogit.schedule.dto.response.GetAlgorithmQuestResponse;
 import com.whitemind.cogit.schedule.dto.response.GetStudyDetailResponse;
 import com.whitemind.cogit.schedule.entity.AlgorithmQuest;
 import com.whitemind.cogit.schedule.entity.AlgorithmQuestPlatform;
@@ -24,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -34,6 +39,7 @@ public class ScheduleServiceImpl implements ScheduleService{
     private final ScheduleRepository scheduleRepository;
     private final AlgorithmQuestRepository algorithmQuestRepository;
     private final MemberAlgorithmQuestRepository memberAlgorithmQuestRepository;
+    private final MemberTeamRepository memberTeamRepository;
 
     @Override
     @Transactional
@@ -106,5 +112,40 @@ public class ScheduleServiceImpl implements ScheduleService{
             .scheduleList(getSchedules)
             .build();
         return getStudyDetailResponse;
+    }
+
+    @Override
+    public List<GetAlgorithmQuestResponse> getScheduleDetail(int scheduleId, HttpServletRequest request) {
+
+        List<GetAlgorithmQuestResponse>getAlgorithmQuestResponses = new ArrayList<>();
+        Schedule schedule = scheduleRepository.findById(scheduleId)
+            .orElseThrow(() -> new NoSuchElementException("해당 일정이 존재하지 않습니다."));
+
+        List<AlgorithmQuest> algorithmQuests = algorithmQuestRepository.findBySchedule(schedule);
+
+        for (AlgorithmQuest algorithmQuest: algorithmQuests) {
+            List<MemberAlgorithmQuest> memberAlgorithmQuests = memberAlgorithmQuestRepository.findByAlgorithmQuest(algorithmQuest);
+            List<GetMemberAlgorithmQuestDto> getMemberAlgorithmQuests = new ArrayList<>();
+            for (MemberAlgorithmQuest memberAlgorithmQuest: memberAlgorithmQuests) {
+                GetMemberAlgorithmQuestDto getMemberAlgorithmQuest = GetMemberAlgorithmQuestDto.builder()
+                    .memberAlgorithmQuestId(memberAlgorithmQuest.getMemberAlgorithmQuestId())
+                    .memberId(memberAlgorithmQuest.getMember().getMemberId())
+                    .memberAlgorithmQuestSolved(memberAlgorithmQuest.isMemberAlgorithmQuestSolved())
+                    .build();
+                getMemberAlgorithmQuests.add(getMemberAlgorithmQuest);
+            }
+
+            GetAlgorithmQuestResponse getAlgorithmQuest = GetAlgorithmQuestResponse.builder()
+                .algorithmQuestId(algorithmQuest.getAlgorithmQuestId())
+                .algorithmQuestPlatform(algorithmQuest.getAlgorithmQuestPlatform().getValue())
+                .algorithmQuestUrl(algorithmQuest.getAlgorithmQuestUrl())
+                .memberAlgorithmQuestList(getMemberAlgorithmQuests)
+                .build();
+
+            getAlgorithmQuestResponses.add(getAlgorithmQuest);
+
+        }
+
+        return getAlgorithmQuestResponses;
     }
 }
