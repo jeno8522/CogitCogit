@@ -1,7 +1,6 @@
 import './globals.css';
 import localFont from 'next/font/local';
 import Header from './Header';
-import Sidebar from './Sidebar';
 
 const tMoney = localFont({
   src: [
@@ -28,8 +27,8 @@ export default function RootLayout({ children }) {
     <html lang="ko" className={tMoney.className}>
       <body>
         <Header />
-        <Sidebar />
-        {children}</body>
+        {children}
+      </body>
     </html>
   );
 }
