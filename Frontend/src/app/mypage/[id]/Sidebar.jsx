@@ -4,12 +4,11 @@ import Button from '@/components/Button';
 import React from 'react';
 import PlusIcon from '@/icons/plus.svg';
 
-function Sidebar() {
-  const nickname = 'Cogit';
-  const GroupList = ['하얀마음 109', '그룹 2', '그룹 3'];
+function Sidebar({ groupList, nickname }) {
+  const GroupList = groupList;
 
   return (
-    <div className="fixed top-0 left-0 z-10 flex flex-col w-1/6 h-full px-3 pt-20 pl-3 border-r-2 border-gray-400 bg-background">
+    <div className="flex flex-col w-1/6 h-[93vh] px-3 pl-3 border-r-2 border-gray-400 bg-background">
       <div className="flex flex-col">
         <div className="pt-5 mx-auto text-2xl font-black pb-7">{nickname}의 코깃</div>
         <div className="w-4/5 mx-auto border-t-2 border-lightgray" />
