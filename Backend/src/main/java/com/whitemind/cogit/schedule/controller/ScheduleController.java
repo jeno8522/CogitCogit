@@ -1,8 +1,11 @@
 package com.whitemind.cogit.schedule.controller;
 
+import java.util.List;
+
 import com.whitemind.cogit.common.response.ResponseResult;
 import com.whitemind.cogit.member.dto.request.CreateStudyRequest;
 import com.whitemind.cogit.schedule.dto.request.CreateScheduleRequest;
+import com.whitemind.cogit.schedule.dto.response.GetAlgorithmQuestResponse;
 import com.whitemind.cogit.schedule.dto.response.GetStudyDetailResponse;
 import com.whitemind.cogit.schedule.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +38,7 @@ public class ScheduleController {
     }
 
     @GetMapping()
-    public GetStudyDetailResponse getScheduleDetail(int scheduleId, HttpServletRequest request) throws Exception {
-        return scheduleService.getStudyDetail(scheduleId, request);
+    public List<GetAlgorithmQuestResponse> getScheduleDetail(int scheduleId, HttpServletRequest request) throws Exception {
+        return scheduleService.getScheduleDetail(scheduleId, request);
     }
 }
