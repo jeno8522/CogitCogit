@@ -33,4 +33,9 @@ public class ScheduleController {
     public GetStudyDetailResponse getStudyDetail(int teamId, HttpServletRequest request) throws Exception {
         return scheduleService.getStudyDetail(teamId, request);
     }
+
+    @GetMapping()
+    public GetStudyDetailResponse getScheduleDetail(int scheduleId, HttpServletRequest request) throws Exception {
+        return scheduleService.getStudyDetail(scheduleId, request);
+    }
 }
