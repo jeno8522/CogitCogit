@@ -1,6 +1,7 @@
 import './globals.css';
 import localFont from 'next/font/local';
 import Header from './Header';
+import Sidebar from './Sidebar';
 
 const tMoney = localFont({
   src: [
@@ -27,7 +28,10 @@ export default function RootLayout({ children }) {
     <html lang="ko" className={tMoney.className}>
       <body>
         <Header />
-        {children}
+        <div className="flex">
+          <Sidebar />
+          <div className="w-full bg-background">{children}</div>
+        </div>
       </body>
     </html>
   );

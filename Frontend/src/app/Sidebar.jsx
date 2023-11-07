@@ -4,8 +4,10 @@ import Button from '@/components/Button';
 import React from 'react';
 import PlusIcon from '@/icons/plus.svg';
 
-function Sidebar({ groupList, nickname }) {
-  const GroupList = groupList;
+function Sidebar() {
+  const nickname = 'Cogit';
+
+  const GroupList = ['하얀마음 109', '그룹 2', '그룹 3'];
 
   return (
     <div className="flex flex-col w-1/6 h-[93vh] px-3 pl-3 border-r-2 border-gray-400 bg-background">
