@@ -2,7 +2,9 @@ package com.whitemind.cogit.schedule.controller;
 
 import java.util.List;
 
+import com.whitemind.cogit.common.response.ListResponseResult;
 import com.whitemind.cogit.common.response.ResponseResult;
+import com.whitemind.cogit.common.response.SingleResponseResult;
 import com.whitemind.cogit.member.dto.request.CreateStudyRequest;
 import com.whitemind.cogit.schedule.dto.request.CreateScheduleRequest;
 import com.whitemind.cogit.schedule.dto.response.GetAlgorithmQuestResponse;
@@ -33,12 +35,12 @@ public class ScheduleController {
     }
 
     @GetMapping("/team")
-    public GetStudyDetailResponse getStudyDetail(int teamId, HttpServletRequest request) throws Exception {
-        return scheduleService.getStudyDetail(teamId, request);
+    public SingleResponseResult getStudyDetail(int teamId, HttpServletRequest request) throws Exception {
+        return new SingleResponseResult<GetStudyDetailResponse>(scheduleService.getStudyDetail(teamId, request));
     }
 
     @GetMapping()
-    public List<GetAlgorithmQuestResponse> getScheduleDetail(int scheduleId, HttpServletRequest request) throws Exception {
-        return scheduleService.getScheduleDetail(scheduleId, request);
+    public ListResponseResult getScheduleDetail(int scheduleId, HttpServletRequest request) throws Exception {
+        return new ListResponseResult<GetAlgorithmQuestResponse>(scheduleService.getScheduleDetail(scheduleId, request));
     }
 }
