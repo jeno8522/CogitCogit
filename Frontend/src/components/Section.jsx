@@ -2,7 +2,7 @@ import React from 'react';
 
 const Section = ({ style, children }) => {
   return (
-    <div className="rounded-small bg-background" style={{ ...style }}>
+    <div className="bg-white rounded-small" style={{ ...style }}>
       {children}
     </div>
   );
