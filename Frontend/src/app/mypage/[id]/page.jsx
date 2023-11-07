@@ -15,7 +15,7 @@ function MyPage({ params }) {
   const GroupList = ['하얀마음 109', '그룹 2', '그룹 3'];
 
   return (
-      <div className="p-3 m-4 bg-white rounded-small">
+      <div className="p-3 m-4 bg-white shadow-lg rounded-large">
         <div className="flex items-center">
           <div className="flex justify-center mb-1 text-2xl font-bold text-hover">
             {nickname}'s Calendar
