@@ -1,15 +1,17 @@
 import React from 'react';
-import Section from '../../Section';
+import Section from '@/components/Section';
 import Table from './Table';
-import Button from '../../Button';
+import Button from '@/components/Button';
 
 const Schedule = () => {
   return (
     <Section
       style={{
         width: '40%',
+        height: '500px',
         display: 'inline-block',
         padding: '10px 20px 30px 20px',
+        margin: '20px 10px 20px 10px',
       }}
     >
       <div className="flex justify-between mb-5">
