@@ -151,7 +151,7 @@ public class CodeServiceImpl implements CodeService {
     public List<GetCodeHistoryResponse> getCodeHisttory(int memberId, int scheduleId) {
         Schedule schedule = scheduleRepository.findByScheduleId(scheduleId);
 
-        List<AlgorithmQuest> algorithmQuestList = algorithmQuestRepository.findAlgorithmQuestsBySchedule(schedule);
+        List<AlgorithmQuest> algorithmQuestList = algorithmQuestRepository.findBySchedule(schedule);
 
         List<GetCodeHistoryResponse> getCodeHistoryResponseList = new ArrayList<>();
 
