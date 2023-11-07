@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -148,27 +149,30 @@ public class CodeServiceImpl implements CodeService {
 
     @Override
     public List<GetCodeHistoryResponse> getCodeHisttory(int memberId, int scheduleId) {
-        Member member = memberRepository.findMembersByMemberId(memberId);
         Schedule schedule = scheduleRepository.findByScheduleId(scheduleId);
 
         List<AlgorithmQuest> algorithmQuestList = algorithmQuestRepository.findAlgorithmQuestsBySchedule(schedule);
 
         List<GetCodeHistoryResponse> getCodeHistoryResponseList = new ArrayList<>();
 
-        for (AlgorithmQuest quest : algorithmQuestList) {
-            List<Code> codeList = quest.getCodeList();
-            for (Code code : codeList) {
-                if (code.getMember().getMemberId() == memberId) {
-                    getCodeHistoryResponseList.add(GetCodeHistoryResponse
-                            .builder()
-                            .codeId(code.getCodeId())
-                            .codeLanguage(code.getLanguage())
-                            .codeRunningTime(code.getCodeRunningTime())
-                            .codeSolved(code.isCodeSolved())
-                            .build());
+        // AlgorithmQuest 조회
+        for (AlgorithmQuest quest: algorithmQuestList) {
+            // memberAlgorithmQuest 조회
+            for (MemberAlgorithmQuest memberAlgorithmQuest: quest.getMemberAlgorithmQuestList()) {
+                // member Code 조회
+                for (Code code : memberAlgorithmQuest.getMember().getCodeList()) {
+                    getCodeHistoryResponseList
+                        .add(GetCodeHistoryResponse
+                        .builder()
+                        .codeId(code.getCodeId())
+                        .codeLanguage(code.getLanguage())
+                        .codeRunningTime(code.getCodeRunningTime())
+                        .codeSolved(code.isCodeSolved())
+                        .build());
                 }
             }
         }
+
         return getCodeHistoryResponseList;
     }
 
