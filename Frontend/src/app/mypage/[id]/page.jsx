@@ -24,10 +24,10 @@ function MyPage({ params }) {
             {GroupList.map((group, idx) => (
               <RadioButton key={idx} text={group} className="mx-4" />
             ))}
-          </div>
         </div>
-        <DynamicCalendar />
       </div>
+      <DynamicCalendar />
+    </div>
   );
 }
 
