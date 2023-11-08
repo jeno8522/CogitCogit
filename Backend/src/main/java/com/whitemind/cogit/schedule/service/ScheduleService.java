@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface ScheduleService {
 
-    void createSchedule(CreateScheduleRequest schedule, HttpServletRequest request);
+    void createSchedule(CreateScheduleRequest schedule);
 
     GetStudyDetailResponse getStudyDetail(int teamId, HttpServletRequest request);
 

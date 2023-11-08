@@ -43,7 +43,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 
     @Override
     @Transactional
-    public void createSchedule(CreateScheduleRequest scheduleRequest, HttpServletRequest request) {
+    public void createSchedule(CreateScheduleRequest scheduleRequest) {
 
         Team study = teamRepository.findById(scheduleRequest.getStudyId())
                 .orElseThrow(() -> new CustomException(ExceptionCode.NOT_EXIST_TEAM_EXCEPTION));

@@ -29,9 +29,9 @@ import javax.servlet.http.HttpServletRequest;
 public class ScheduleController {
     private final ScheduleService scheduleService;
     @PostMapping("/add")
-    public ResponseResult createStudySchetule(@RequestBody CreateScheduleRequest schedule, HttpServletRequest request) throws Exception {
+    public ResponseResult createStudySchetule(@RequestBody CreateScheduleRequest schedule) throws Exception {
         log.info("createStudySchetule | Study 스케줄 생성 요청");
-        scheduleService.createSchedule(schedule, request);
+        scheduleService.createSchedule(schedule);
         return ResponseResult.successResponse;
     }
 
@@ -47,7 +47,7 @@ public class ScheduleController {
 
     @PostMapping("/quest/add")
     public ResponseResult addQuesttoSchedule(@RequestBody AddQuestRequest addQuestRequest) {
-        scheduleService.AddQuest(addQuestRequest);
+        scheduleService.addQuest(addQuestRequest);
         return SingleResponseResult.successResponse;
     }
 }

@@ -7,6 +7,10 @@ import com.whitemind.cogit.common.jwt.JwtService;
 import com.whitemind.cogit.member.dto.UpdateMemberDto;
 import com.whitemind.cogit.member.entity.Member;
 import com.whitemind.cogit.member.repository.MemberRepository;
+import com.whitemind.cogit.member.service.StudyService;
+import com.whitemind.cogit.schedule.dto.request.CreateScheduleRequest;
+import com.whitemind.cogit.schedule.entity.Schedule;
+import com.whitemind.cogit.schedule.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.sql.Update;
@@ -18,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Base64;
 
 @Slf4j
@@ -69,7 +75,7 @@ public class GithubServiceImple implements GithubService {
                     .memberGitAccessToken(accessToken)
                     .build();
         else
-            updateMemberDto = new UpdateMemberDto(jObject.getInt("id"), jObject.getString("html_url"), jObject.getString("login"), jObject.getString("login"),"", jObject.getString("avatar_url"), accessToken);
+            updateMemberDto = new UpdateMemberDto(jObject.getInt("id"), jObject.getString("html_url"), jObject.getString("login"), jObject.getString("login"), "", jObject.getString("avatar_url"), accessToken);
 
         conn.disconnect();
         return updateMemberDto;
