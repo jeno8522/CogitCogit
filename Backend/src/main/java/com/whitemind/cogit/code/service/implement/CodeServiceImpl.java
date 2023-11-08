@@ -165,7 +165,7 @@ public class CodeServiceImpl implements CodeService {
 
         for (AlgorithmQuest algorithmQuest : algorithmQuestList) {
             // algorithmQuest 목록 중, 내가 제출한 코드 페이지 별로 조회
-            List<Code> codeList = codeRepository.findByAlgorithmQuestIdAndMemberIdByPage(member.getMemberId(), algorithmQuest.getAlgorithmQuestId(), PageRequest.of(page * 10, page * 10 + 10)).getContent();
+            List<Code> codeList = codeRepository.findByAlgorithmQuestIdAndMemberIdByPage(member.getMemberId(), algorithmQuest.getAlgorithmQuestId(), PageRequest.of(page, 10)).getContent();
 
             for (Code code : codeList) {
                 getCodeHistoryResponseList.add(GetCodeHistoryResponse.builder()
