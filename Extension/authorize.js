@@ -48,14 +48,10 @@ function requestCogitLogin(code) {
 }
 
 /* Check for open pipe */
-<<<<<<< HEAD
-if (window.location.host === 'github.com') {
-=======
 if (
   window.location.host === 'github.com' &&
   window.location.href.includes('?code=')
 ) {
->>>>>>> 3081572a7c57221fb7ddad04a429b2c5e543f630
   const link = window.location.href;
   chrome.storage.local.get('pipe_cogit', (data) => {
     if (data && data.pipe_cogit) {
@@ -63,11 +59,6 @@ if (
       if (code != null) {
         requestCogitLogin(code);
       }
-<<<<<<< HEAD
-
-      chrome.storage.local.remove('pipe_cogit');
-=======
->>>>>>> 3081572a7c57221fb7ddad04a429b2c5e543f630
     }
   });
 }
