@@ -1,5 +1,4 @@
 import React from 'react';
-import Th from './Th';
 
 const questions = ['이름', 'BOJ1', 'BOJ2', 'BOJ3', 'BOJ4', 'BOJ5'];
 
@@ -9,7 +8,7 @@ const THead = () => {
       <thead>
         <tr className="bg-gray-800">
           {questions.map((question) => {
-            return <Th question={question} />;
+            return <th className="px-4 py-3 text-gray-300">{question}</th>;
           })}
         </tr>
       </thead>

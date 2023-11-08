@@ -1,6 +1,7 @@
 import React from 'react';
 import { Section } from '@/components/Section';
-import Table from './Table';
+import TBody from './TBody';
+import THead from './THead';
 import Button from '@/components/Button';
 import ScheduleIcon from '@/icons/schedule.svg';
 
@@ -20,7 +21,10 @@ const Schedule = () => {
         </Section.ButtonList>
       </div>
       <Section.Container>
-        <Table />
+        <table className="w-[90%] text-center m-auto">
+          <THead></THead>
+          <TBody></TBody>
+        </table>
       </Section.Container>
     </Section>
   );
