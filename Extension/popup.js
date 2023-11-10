@@ -85,7 +85,13 @@ document.addEventListener('DOMContentLoaded', function () {
       var authModeElement = document.getElementById('auth_mode');
       if (authModeElement) {
         authModeElement.style.display = 'none';
+        document.getElementById('cogitLink').style.display = 'block';
       }
     }
+  });
+
+  const cogitLink = document.getElementById('cogitLink');
+  cogitLink.addEventListener('click', function () {
+    window.open('https://cogit.kr', '_blank');
   });
 });
