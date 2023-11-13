@@ -31,7 +31,7 @@
       ]
     },
     {
-      "matches": ["http://localhost:3000/*"],
+      "matches": ["https://cogit.kr/*"],
       "js": ["authorize.js"]
     }
   ],

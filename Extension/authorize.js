@@ -14,7 +14,7 @@ function parseAccessCode(url) {
 
 // 코깃코깃 서비스 로그인
 function requestCogitLogin(code) {
-  console.log('parameter', code);
+  // console.log('parameter', code);
 
   fetch(`https://cogit.kr/api/auth/regist?code=${code}`, {
     method: 'GET',
@@ -28,14 +28,13 @@ function requestCogitLogin(code) {
     },
   }).then((response) => {
     // 응답헤어 로큰 익스텐션 로컬스토리지 저장
-    console.log(response.headers.get('Authorization'));
+    // console.log(response.headers.get('Authorization'));
 
     if (response.status !== 200) {
       console.log('유저 등록에 실패했습니다.');
       return;
     }
     // 읽기 함수 정의
-    console.log(response);
     chrome.storage.local.set(
       {
         cogit: {
@@ -46,13 +45,11 @@ function requestCogitLogin(code) {
       () => {
         // 저장 되었는지 확인
         chrome.storage.local.get('cogit', (data) => {
-          console.log(data);
           // 로컬스토리지에 cogit 데이터 등록
           localStorage.setItem('cogit', JSON.stringify(data.cogit));
 
           response.json().then((res) => {
             localStorage.setItem('cogit_member', JSON.stringify(res.data));
-            console.log(res.data);
           });
         });
         // window.close();
@@ -64,7 +61,7 @@ function requestCogitLogin(code) {
 
 /* Check for open pipe */
 if (
-  window.location.host === 'localhost:3000' &&
+  window.location.host === 'cogit.kr' &&
   window.location.href.includes('?code=')
 ) {
   const link = window.location.href;
@@ -102,7 +99,6 @@ function refreshAccessToken() {
           if (!response.ok) {
             throw new Error('리프레시 토큰 요청에 실패했습니다.');
           }
-          console.log(response);
 
           const newAuthorization = response.headers.get('Authorization');
 
@@ -116,7 +112,6 @@ function refreshAccessToken() {
             () => {
               // 저장되었는지 확인
               chrome.storage.local.get('cogit', (data) => {
-                console.log(data);
                 // 로컬스토리지에 cogit 데이터 갱신
                 localStorage.setItem('cogit', JSON.stringify(data.cogit));
                 resolve(newAuthorization); // Promise에 새로운 토큰 반환
