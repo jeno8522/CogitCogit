@@ -20,7 +20,7 @@
       "js": ["authorize.js"]
     }
   ],
-  "permissions": ["storage", "activeTab", "scripting"],
+  "permissions": ["storage"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
