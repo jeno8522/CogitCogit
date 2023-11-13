@@ -31,7 +31,7 @@
       ]
     },
     {
-      "matches": ["https://localhost:3000/*"],
+      "matches": ["http://localhost:3000/*"],
       "js": ["authorize.js"]
     }
   ],
