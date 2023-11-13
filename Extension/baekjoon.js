@@ -7,10 +7,6 @@ if (submitButton != null) {
   });
 }
 
-const loadingImg = document.createElement('img');
-loadingImg.src = 'https://cogitusercode.s3.ap-northeast-2.amazonaws.com/ball.gif';
-loadingImg.style = 'width:20px';
-
 function saveCode() {
   const codeMirrorLines = document.querySelectorAll('.CodeMirror-line');
 
@@ -29,11 +25,9 @@ if (solutionElements.length > 0) {
   let spanElement = firstSolutionElement.querySelector('span[data-color]');
   preContent = spanElement.textContent;
 
-  let resultElement = firstSolutionElement.querySelector('.result');
-  resultElement.appendChild(loadingImg);
-
+  
   console.log(preContent);
-
+  
   let isActive = false;
   chrome.storage.local.get('active', function (result) {
     console.log(result.active);
@@ -43,8 +37,15 @@ if (solutionElements.length > 0) {
       }
     }
   });
-
+  
   if (preContent.includes('중')) {
+
+    let resultElement = firstSolutionElement.querySelector('.result');
+    let loadingImg = document.createElement('img');
+    loadingImg.src = 'https://cogitusercode.s3.ap-northeast-2.amazonaws.com/assets/loading.gif';
+    loadingImg.style = 'width:20px';
+    resultElement.appendChild(loadingImg);
+
     // 2초 간격으로 내용 확인
     const intervalId = setInterval(function () {
       chrome.storage.local.get('active', function (result) {
@@ -78,38 +79,48 @@ if (solutionElements.length > 0) {
             var code = localStorage.getItem('code');
 
             if (currentContent.includes('맞았습니다')) {
-              // sendCode(
-              //   code,
-              //   true,
-              //   'BAEKJOON',
-              //   codeLanguage,
-              //   codeRunningTime,
-              //   algorithmQuestId,
-              //   codeFileExtension,
-              //   `${PLATFORM_URL}${algorithmQuestId}`
-              // );
-              console.log('전송!');
               loadingImg.remove();
               var cogitImg = document.createElement('img');
-              cogitImg.src = 'https://cogitusercode.s3.ap-northeast-2.amazonaws.com/cogit.PNG';
-              cogitImg.style = 'width:20px';
+              cogitImg.src =
+                'https://cogitusercode.s3.ap-northeast-2.amazonaws.com/assets/cogit.png';
+              cogitImg.style = 'width:20px; margin-left:5px';
+              
               spanElement.appendChild(cogitImg);
+
+              sendCode(
+                code,
+                true,
+                'BAEKJOON',
+                codeLanguage,
+                codeRunningTime,
+                algorithmQuestId,
+                codeFileExtension,
+                `${PLATFORM_URL}${algorithmQuestId}`
+              );
+
             } else if (
               currentContent.includes('틀렸습니다') ||
               currentContent.includes('시간 초과') ||
               currentContent.includes('메모리 초과')
             ) {
-              console.log('전송!');
-              // sendCode(
-              //   code,
-              //   false,
-              //   'BAEKJOON',
-              //   codeLanguage,
-              //   codeRunningTime,
-              //   algorithmQuestId,
-              //   codeFileExtension,
-              //   `${PLATFORM_URL}${algorithmQuestId}`
-              // );
+              loadingImg.remove();
+              var cogitGreyImg = document.createElement('img');
+              cogitGreyImg.src =
+                'https://cogitusercode.s3.ap-northeast-2.amazonaws.com/assets/cogit_gray.png';
+              cogitGreyImg.style = 'width:20px; margin-left:5px';
+              spanElement.appendChild(cogitGreyImg);
+
+              sendCode(
+                code,
+                false,
+                'BAEKJOON',
+                codeLanguage,
+                codeRunningTime,
+                algorithmQuestId,
+                codeFileExtension,
+                `${PLATFORM_URL}${algorithmQuestId}`
+              );
+
             }
           }
         }
