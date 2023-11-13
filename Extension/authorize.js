@@ -50,7 +50,7 @@ function requestCogitLogin(code) {
           // 로컬스토리지에 cogit 데이터 등록
           localStorage.setItem('cogit', JSON.stringify(data));
         });
-        window.close();
+        // window.close();
       }
     );
   });
@@ -59,7 +59,7 @@ function requestCogitLogin(code) {
 
 /* Check for open pipe */
 if (
-  window.location.host === 'github.com' &&
+  window.location.host === 'cogit.kr' &&
   window.location.href.includes('?code=')
 ) {
   const link = window.location.href;
