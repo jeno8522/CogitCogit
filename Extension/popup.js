@@ -92,6 +92,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const cogitLink = document.getElementById('cogitLink');
   cogitLink.addEventListener('click', function () {
-    window.open('https://cogit.kr', '_blank');
+    window.open('https://cogit.kr/redirect', '_blank');
   });
 });
