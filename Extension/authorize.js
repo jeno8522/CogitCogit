@@ -59,7 +59,7 @@ function requestCogitLogin(code) {
 
 /* Check for open pipe */
 if (
-  window.location.host === 'cogit.kr' &&
+  window.location.host === 'http://localhost:3000/redirect' &&
   window.location.href.includes('?code=')
 ) {
   const link = window.location.href;
