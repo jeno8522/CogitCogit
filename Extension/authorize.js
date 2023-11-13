@@ -50,7 +50,7 @@ function requestCogitLogin(code) {
           // 로컬스토리지에 cogit 데이터 등록
           localStorage.setItem('cogit', JSON.stringify(data));
         });
-        // window.close();
+        window.close();
       }
     );
   });
