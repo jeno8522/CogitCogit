@@ -34,7 +34,7 @@ public class JwtFilter extends OncePerRequestFilter {
         System.out.println(authorization);
         if(authorization == null || !authorization.startsWith("Bearer ")) {
             log.error("인증 에러 " + authorization + " 토큰이 잘못되었습니다");
-            log.error("Authorization을 잘못 보냈습니다 " + authorization);
+            log.error("인증 에러: Authorization을 잘못 보냈습니다 " + authorization);
             filterChain.doFilter(request, response);
             return;
         }
