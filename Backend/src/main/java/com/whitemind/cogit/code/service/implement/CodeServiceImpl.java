@@ -91,7 +91,7 @@ public class CodeServiceImpl implements CodeService {
 
 //            Schedule schedule = scheduleRepository.findByScheduleId(1);
             Team team = teamRepository.findByTeamName(memberRepository.findMembersByMemberId(memberId).getMemberName()).get(0);
-            Schedule schedule = scheduleRepository.findByScheduleNameAndScheduleId("기본일정", team.getTeamId());
+            Schedule schedule = scheduleRepository.findByScheduleNameAndScheduleId("기본 일정", team.getTeamId());
             // 이미 문제 DB에 등록되어있는지 확인
             algorithmQuest = algorithmQuestRepository.findByAlgorithmQuestNumber(codeRequest.getAlgorithmQuestNumber());
 
