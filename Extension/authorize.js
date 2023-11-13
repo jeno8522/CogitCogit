@@ -47,6 +47,8 @@ function requestCogitLogin(code) {
         // 저장 되었는지 확인
         chrome.storage.local.get('cogit', (data) => {
           console.log(data);
+          // 로컬스토리지에 cogit 데이터 등록
+          localStorage.setItem('cogit', JSON.stringify(data));
         });
         // window.close();
       }
@@ -110,6 +112,8 @@ function refreshAccessToken() {
               // 저장되었는지 확인
               chrome.storage.local.get('cogit', (data) => {
                 console.log(data);
+                // 로컬스토리지에 cogit 데이터 갱신
+                localStorage.setItem('cogit', JSON.stringify(data));
                 resolve(newAuthorization); // Promise에 새로운 토큰 반환
               });
             }
