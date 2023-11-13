@@ -13,6 +13,7 @@ public class JwtUtils {
         return Keys.hmacShaKeyFor(secretKey.getBytes()).getEncoded();
     }
     public static Jws<Claims> parseToken(String token, String secretKey) {
+        System.out.println("token: " + token + "  secretKey: " + secretKey);
         return Jwts.parser().setSigningKey(generateKey(secretKey)).parseClaimsJws(token);
     }
 

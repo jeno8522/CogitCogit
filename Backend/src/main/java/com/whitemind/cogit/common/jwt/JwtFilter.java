@@ -37,14 +37,16 @@ public class JwtFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-
+        log.info("Authorization이 정상입니다.");
         // Token 꺼내기
         String token = authorization.split(" ")[1];
+        log.info("Token: " + token);
         log.info("JwtFilter doFilterInternal | accessToken : " + token);
 
         try {
             Jws<Claims> claims = JwtUtils.parseToken(token, secretKey);
             int memberId = claims.getBody().get("memberId", Integer.class);
+            log.info("memberId: " + memberId);
             request.setAttribute("memberId", memberId);
             log.info("JwtFilter doFilterInternal | memberId : " + String.valueOf(memberId));
 
