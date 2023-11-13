@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const AUTHORIZATION_URL = 'https://github.com/login/oauth/authorize';
   const CLIENT_ID = '8f0485d786b3f5eba00e';
-  const REDIRECT_URL = 'https://cogit.kr/'; // 변경 필요
+  const REDIRECT_URL = 'http://localhost:3000/redirect'; // 변경 필요
   const SCOPES = [
     'repo',
     'admin:repo_hook',
