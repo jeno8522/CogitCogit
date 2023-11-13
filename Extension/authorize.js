@@ -27,7 +27,6 @@ function requestCogitLogin(code) {
       'Access-Control-Allow-Headers': 'Content-Type',
     },
   }).then((response) => {
-    console.log(response);
     // 응답헤어 로큰 익스텐션 로컬스토리지 저장
     console.log(response.headers.get('Authorization'));
 
@@ -35,7 +34,8 @@ function requestCogitLogin(code) {
       console.log('유저 등록에 실패했습니다.');
       return;
     }
-
+    // 읽기 함수 정의
+    console.log(response);
     chrome.storage.local.set(
       {
         cogit: {
@@ -49,6 +49,11 @@ function requestCogitLogin(code) {
           console.log(data);
           // 로컬스토리지에 cogit 데이터 등록
           localStorage.setItem('cogit', JSON.stringify(data));
+
+          response.json().then((res) => {
+            localStorage.setItem('cogit_member', JSON.stringify(res.data));
+            console.log(res.data);
+          });
         });
         // window.close();
       }
