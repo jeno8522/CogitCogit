@@ -23,7 +23,7 @@ function sendCode(
       return;
     }
     function executeRequestWithToken(token) {
-      fetch('http://localhost:8080/code/commit', {
+      fetch('https://cogit.kr/api/code/commit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

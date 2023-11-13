@@ -16,8 +16,16 @@ function parseAccessCode(url) {
 function requestCogitLogin(code) {
   console.log('parameter', code);
 
-  fetch(`http://localhost:8080/auth/regist?code=${code}`, {
+  fetch(`https://cogit.kr/api/auth/regist?code=${code}`, {
     method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      // 여기에 추가: CORS 문제를 해결하기 위한 헤더
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
   }).then((response) => {
     console.log(response);
     // 응답헤어 로큰 익스텐션 로컬스토리지 저장
@@ -76,7 +84,7 @@ function refreshAccessToken() {
 
       const refreshToken = cogitData.RefreshToken;
 
-      fetch('http://localhost:8080/auth/refresh', {
+      fetch('https://cogit.kr/api/auth/refresh', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
