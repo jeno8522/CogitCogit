@@ -7,6 +7,10 @@ if (submitButton != null) {
   });
 }
 
+const loadingImg = document.createElement('img');
+loadingImg.src = 'https://cogitusercode.s3.ap-northeast-2.amazonaws.com/ball.gif';
+loadingImg.style = 'width:20px';
+
 function saveCode() {
   const codeMirrorLines = document.querySelectorAll('.CodeMirror-line');
 
@@ -24,6 +28,10 @@ if (solutionElements.length > 0) {
   let firstSolutionElement = solutionElements[0];
   let spanElement = firstSolutionElement.querySelector('span[data-color]');
   preContent = spanElement.textContent;
+
+  let resultElement = firstSolutionElement.querySelector('.result');
+  resultElement.appendChild(loadingImg);
+
   console.log(preContent);
 
   let isActive = false;
@@ -70,16 +78,18 @@ if (solutionElements.length > 0) {
             var code = localStorage.getItem('code');
 
             if (currentContent.includes('맞았습니다')) {
-              sendCode(
-                code,
-                true,
-                'BAEKJOON',
-                codeLanguage,
-                codeRunningTime,
-                algorithmQuestId,
-                codeFileExtension,
-                `${PLATFORM_URL}${algorithmQuestId}`
-              );
+              // sendCode(
+              //   code,
+              //   true,
+              //   'BAEKJOON',
+              //   codeLanguage,
+              //   codeRunningTime,
+              //   algorithmQuestId,
+              //   codeFileExtension,
+              //   `${PLATFORM_URL}${algorithmQuestId}`
+              // );
+              console.log('전송!');
+              loadingImg.remove();
               var cogitImg = document.createElement('img');
               cogitImg.src = 'https://cogitusercode.s3.ap-northeast-2.amazonaws.com/cogit.PNG';
               cogitImg.style = 'width:20px';
@@ -89,16 +99,17 @@ if (solutionElements.length > 0) {
               currentContent.includes('시간 초과') ||
               currentContent.includes('메모리 초과')
             ) {
-              sendCode(
-                code,
-                false,
-                'BAEKJOON',
-                codeLanguage,
-                codeRunningTime,
-                algorithmQuestId,
-                codeFileExtension,
-                `${PLATFORM_URL}${algorithmQuestId}`
-              );
+              console.log('전송!');
+              // sendCode(
+              //   code,
+              //   false,
+              //   'BAEKJOON',
+              //   codeLanguage,
+              //   codeRunningTime,
+              //   algorithmQuestId,
+              //   codeFileExtension,
+              //   `${PLATFORM_URL}${algorithmQuestId}`
+              // );
             }
           }
         }
