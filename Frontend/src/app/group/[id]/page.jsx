@@ -42,7 +42,6 @@ function Group({ params }) {
       data: { data },
     } = await axios.get(`/schedule/team?teamId=${teamId}`);
     setTeamInfo(data);
-    console.log(teamInfo.scheduleList);
   };
 
   const onClickMemberManagementModal = () => {
@@ -90,7 +89,7 @@ function Group({ params }) {
         </div>
       </div>
       <div className="flex justify-center w-full">
-        <Ranking />
+        <Ranking teamId={teamId} />
       </div>
       <div className="flex justify-between w-full h-[500px]">
         <Schedule
