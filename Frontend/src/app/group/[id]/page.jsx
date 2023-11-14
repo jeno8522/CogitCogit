@@ -20,7 +20,7 @@ function Group({ params }) {
     teamName: '',
     scheduleList: [
       {
-        scheduleId: '6',
+        scheduleId: '',
         scheduleName: '',
         scheduleStartAt: '',
         scheduleEndAt: '',
@@ -38,9 +38,7 @@ function Group({ params }) {
   };
 
   const fetchTeamInfo = async () => {
-    const {
-      data: { data },
-    } = await axios.get(`/schedule/team?teamId=${teamId}`);
+    const { data } = await axios.get(`/schedule/team?teamId=${teamId}`);
     setTeamInfo(data);
   };
 
@@ -92,11 +90,7 @@ function Group({ params }) {
         <Ranking teamId={teamId} />
       </div>
       <div className="flex justify-between w-full h-[500px]">
-        <Schedule
-          members={members}
-          scheduleId={teamInfo.scheduleList[0].scheduleId}
-          scheduleName={teamInfo.scheduleList[0].scheduleName}
-        />
+        <Schedule members={members} scheduleList={teamInfo.scheduleList} />
         <AlgoSite />
       </div>
     </div>
