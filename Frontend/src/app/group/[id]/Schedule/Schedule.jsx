@@ -10,7 +10,7 @@ import QuestModal from '../Modal/QuestModal';
 import ScheduleMenu from './ScheduleMenu';
 import axios from '@/api/index';
 
-const Schedule = ({ members, scheduleList }) => {
+const Schedule = ({ members, scheduleList, teamId }) => {
   const [showScheduleModal, setScheduleModal] = useState(false);
   const [showQuestModal, setQuestModal] = useState(false);
   const [questions, setQuestions] = useState([]);
@@ -69,7 +69,7 @@ const Schedule = ({ members, scheduleList }) => {
           >
             문제 추가
           </Button>
-          {showQuestModal && <QuestModal isOpen={showQuestModal} onClose={onClickQuestModal} />}
+          {showQuestModal && <QuestModal isOpen={showQuestModal} onClose={onClickQuestModal} scheduleId={scheduleList[0].scheduleId} />}
           <Button
             className="items-center p-5 m-1 bg-primary rounded-small"
             onClick={onClickScheduleModal}
@@ -77,7 +77,7 @@ const Schedule = ({ members, scheduleList }) => {
             일정 추가
           </Button>
           {showScheduleModal && (
-            <ScheduleModal isOpen={showScheduleModal} onClose={onClickScheduleModal} />
+            <ScheduleModal isOpen={showScheduleModal} onClose={onClickScheduleModal} teamId={teamId}/>
           )}
         </Section.ButtonList>
       </div>
