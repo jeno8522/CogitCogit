@@ -8,20 +8,38 @@ import CloseIcon from '@/icons/close.svg';
 
 function QuestModal({ isOpen, onClose }) {
   const [data, setData] = useState([]);
+  const [questList, setQuestList] = useState([]);
 
   const onClickClose = () => {
     onClose();
   };
   const onClickAddQuest = () => {
+    {
+      data.map((idx) => {
+        return setQuestList([...questList, `quest${idx}`]);
+      });
+    }
+    console.log(data);
     onClose();
   };
   const onCreate = () => {
-    const newQuest = {};
-    setData([newQuest, ...data]);
+    setData([...data, `quest${data.length}`]);
   };
   const onClickDelete = () => {
-    const newList = data.filter;
+    const newList = [];
     setData(newList);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (!isNaN(value)) {
+      setData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    } else {
+      alert('링크를 입력해주세요.');
+    }
   };
 
   return (
@@ -47,7 +65,7 @@ function QuestModal({ isOpen, onClose }) {
             </div>
             <div className="w-11/12 h-[320px] overflow-auto scrollbar-default bg-white rounded-large mb-3">
               {data.map((quest, idx) => {
-                return <AddAlgorithmQuest key={idx} index={idx} />;
+                return <AddAlgorithmQuest key={idx} index={idx} handleChange={handleChange} />;
               })}
             </div>
             <Button
