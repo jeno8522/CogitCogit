@@ -4,8 +4,8 @@ import Tr from './Tr';
 const TBody = ({ questions, members }) => {
   return (
     <tbody>
-      {members.map((member) => {
-        return <Tr member={member} questions={questions} />;
+      {members.map((member, idx) => {
+        return <Tr member={member} questions={questions} key={idx} />;
       })}
     </tbody>
   );

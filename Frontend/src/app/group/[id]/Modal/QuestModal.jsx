@@ -46,8 +46,8 @@ function QuestModal({ isOpen, onClose }) {
               </Button>
             </div>
             <div className="w-11/12 h-[320px] overflow-auto scrollbar-default bg-white rounded-large mb-3">
-              {data.map((quest, index) => {
-                return <AddAlgorithmQuest index={index} />;
+              {data.map((quest, idx) => {
+                return <AddAlgorithmQuest key={idx} index={idx} />;
               })}
             </div>
             <Button

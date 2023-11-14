@@ -20,8 +20,8 @@ function MemberManagementModal({ isOpen, onClose, onClickAddMember, members }) {
           <Modal.Title>멤버 관리</Modal.Title>
           <div className="my-4 flex flex-col items-center h-[80%] overflow-auto">
             <div className="grid grid-cols-4 my-4 gap-x-8">
-              {members.map((member) => {
-                return <MemberCard nickname={member.memberName} />;
+              {members.map((member, idx) => {
+                return <MemberCard nickname={member.memberName} key={idx} />;
               })}
             </div>
           </div>
