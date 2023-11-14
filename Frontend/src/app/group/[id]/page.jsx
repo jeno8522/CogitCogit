@@ -90,7 +90,7 @@ function Group({ params }) {
         <Ranking teamId={teamId} />
       </div>
       <div className="flex justify-between w-full h-[500px]">
-        <Schedule members={members} scheduleList={teamInfo.scheduleList} />
+        <Schedule members={members} scheduleList={teamInfo.scheduleList} teamId={teamId}/>
         <AlgoSite />
       </div>
     </div>
