@@ -32,7 +32,7 @@ const Schedule = ({ members, scheduleId, scheduleName }) => {
   }, []);
 
   return (
-    <Section className="w-[60%] h-full inline-block p-[20px] my-[20px] mr-[10px] overflow-auto">
+    <Section className="w-[70%] h-full inline-block p-[20px] my-[20px] mr-[10px] overflow-auto">
       <div className="flex justify-between mb-3">
         <Section.Title className="justify-between mt-3">
           <div className="flex">

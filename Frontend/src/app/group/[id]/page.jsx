@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Ranking from './Ranking/Ranking';
 import Schedule from './Schedule/Schedule';
-import ToDoList from './ToDo/ToDoList';
+import AlgoSite from './AlgoSite/AlgoSite';
 import Button from '@/components/Button';
 import SettingIcon from '@/icons/setting.svg';
 import ExitIcon from '@/icons/exit.svg';
@@ -98,7 +98,7 @@ function Group({ params }) {
           scheduleId={teamInfo.scheduleList[0].scheduleId}
           scheduleName={teamInfo.scheduleList[0].scheduleName}
         />
-        <ToDoList />
+        <AlgoSite />
       </div>
     </div>
   );

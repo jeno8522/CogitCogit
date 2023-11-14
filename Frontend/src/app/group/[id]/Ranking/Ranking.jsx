@@ -19,7 +19,7 @@ const Ranking = () => {
       <Section.Container>
         <div className="flex justify-center mb-4">
           {members.map((member, idx) => (
-            <RankCard nickname={member} key={idx}></RankCard>
+            <RankCard nickname={member} key={idx} idx={idx}></RankCard>
           ))}
         </div>
       </Section.Container>
