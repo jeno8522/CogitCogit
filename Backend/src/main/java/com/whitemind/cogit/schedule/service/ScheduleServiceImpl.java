@@ -10,6 +10,7 @@ import com.whitemind.cogit.member.repository.MemberAlgorithmQuestRepository;
 import com.whitemind.cogit.member.repository.MemberRepository;
 import com.whitemind.cogit.member.repository.MemberTeamRepository;
 import com.whitemind.cogit.member.repository.TeamRepository;
+import com.whitemind.cogit.schedule.dto.AlgorithmQuestDto;
 import com.whitemind.cogit.schedule.dto.GetMemberAlgorithmQuestDto;
 import com.whitemind.cogit.schedule.dto.GetScheduleDto;
 import com.whitemind.cogit.schedule.dto.request.AddQuestRequest;
@@ -145,23 +146,32 @@ public class ScheduleServiceImpl implements ScheduleService{
         addQuestToSchedule(addQuestRequest.getAlgorithmQuestList(), schedule, addQuestRequest.getScheduleId());
     }
 
-    public void addQuestToSchedule(List<String> algorithmQuestList, Schedule schedule, int studyId){
+    public void addQuestToSchedule(List<AlgorithmQuestDto> algorithmQuestList, Schedule schedule, int studyId) {
         // 해당 스케줄에 각 문제 등록
-        for (String questUrl : algorithmQuestList){
-            String [] questNumber = questUrl.split("/");
-
-            String number = questNumber[questNumber.length - 1];
+        for (AlgorithmQuestDto algorithmQuestDto : algorithmQuestList){
+            String platform = algorithmQuestDto.getPlatform();
+            int questNumber = algorithmQuestDto.getQuestNumber();
+            String url = "";
 
             // 문제 URL 이상 여부 판단
-            if (!(questUrl.contains("programmers") || questUrl.contains("acmicpc")))
+            if (!platform.equals("PROG") && !platform.equals("BOJ")) {
                 throw new CustomException(ExceptionCode.NOT_EXIST_ALGORITHM_PLATFORM_EXCEPTION);
+            }
 
+            if(platform.equals("PROG")) {
+                url = "https://school.programmers.co.kr/learn/courses/30/lessons/";
+            }
 
+            if(platform.equals("BOJ")) {
+                url = "https://www.acmicpc.net/problem/";
+            }
+
+            url += questNumber;
 
             AlgorithmQuest algorithmQuest = AlgorithmQuest.builder()
-                    .algorithmQuestNumber(Integer.parseInt(number))
-                    .algorithmQuestUrl(questUrl)
-                    .algorithmQuestPlatform((questUrl.contains("programmers") ? AlgorithmQuestPlatform.PROGRAMMERS : AlgorithmQuestPlatform.BAEKJOON))
+                    .algorithmQuestNumber(questNumber)
+                    .algorithmQuestUrl(url)
+                    .algorithmQuestPlatform(platform.equals("PROG") ? AlgorithmQuestPlatform.PROGRAMMERS : AlgorithmQuestPlatform.BAEKJOON)
                     .schedule(schedule)
                     .build();
             algorithmQuestRepository.save(algorithmQuest);
