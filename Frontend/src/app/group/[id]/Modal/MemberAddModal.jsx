@@ -19,10 +19,12 @@ function MemberAddModal({ isOpen, onClose, teamId }) {
     if (confirm(`초대하시겠습니까??`) == true) {
       const {
         data: { data },
-      } = await axios.post(`/studu/member/add`, {
+      } = await axios.post(`/study/member/add`, {
         teamId,
         memberId: id,
       });
+      alert("초대되었습니다!");
+      onClickClose();
     }
   };
 

@@ -10,12 +10,16 @@ import ExitIcon from '@/icons/exit.svg';
 import GroupIcon from '@/icons/group.svg';
 import MemberManagementModal from './Modal/MemberManagementModal';
 import MemberAddModal from './Modal/MemberAddModal';
+import MemberDeleteModal from './Modal/MemberDeleteModal';
 import axios from '@/api/index';
 import { useMemberState } from '@/app/MemberContext';
+import { useSelector } from 'react-redux';
 
 function Group({ params }) {
   const [showMemberManagementModal, setMemberManagementModal] = useState(false);
   const [showMemberAddModal, setMemberAddModal] = useState(false);
+  const [showMemberDeleteModal, setMemberDeleteModal] = useState(false);
+  const userId = useSelector((state) => state.user.id);
 
   const { teamList } = useMemberState();
 
@@ -55,8 +59,21 @@ function Group({ params }) {
 
   const onClickAddMember = () => {
     setMemberAddModal((prev) => !prev);
-    // setMemberManagementModal((prev) => !prev);
+    setMemberManagementModal((prev) => !prev);
   };
+
+  const onClickMemberDeleteModal = () => {
+    setMemberDeleteModal((prev) => !prev);
+  }
+
+  const onClickDeleteMember = async () => {
+    const {
+      data: { data },
+    } = await axios.delete(`/study/leave`, {
+      teamId: teamInfo.teamId,
+      memberId: userId,
+    });
+  }
 
   useEffect(() => {
     TeamInfo();
@@ -78,7 +95,8 @@ function Group({ params }) {
           >
             <SettingIcon alt="settingIcon" width={36} height={36} />
           </Button>
-          <Button className="p-1 mb-3 rounded-small bg-hover hover:bg-warning">
+          <Button className="p-1 mb-3 rounded-small bg-hover hover:bg-warning"
+          onClick={onClickMemberDeleteModal}>
             <ExitIcon alt="settingIcon" width={36} height={36} />
           </Button>
           {showMemberManagementModal && (
@@ -90,7 +108,10 @@ function Group({ params }) {
             />
           )}
           {showMemberAddModal && (
-            <MemberAddModal isOpen={showMemberAddModal} onClose={onClickAddMember} />
+            <MemberAddModal isOpen={showMemberAddModal} onClose={onClickAddMember} teamId={teamInfo.teamId}/>
+          )}
+          {showMemberDeleteModal && (
+            <MemberDeleteModal isOpen={showMemberDeleteModal} onClose={() => setMemberDeleteModal(false)} onClickDeleteMember={onClickDeleteMember}/>
           )}
         </div>
       </div>
