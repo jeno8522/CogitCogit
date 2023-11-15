@@ -37,7 +37,7 @@ function page({ searchParams }) {
         localStorage.setItem('refreshToken', refreshToken);
         console.log('저장된 accessToken ====== ', accessToken);
         //우리 메인페이지로 이동하고 싶다.
-        // router.push('/');
+        router.push('/');
       } else {
         console.error('Failed to authenticate');
       }
