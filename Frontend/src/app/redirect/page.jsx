@@ -16,7 +16,7 @@ function page() {
     const bearer = process.env.NEXT_PUBLIC_BEARER;
     try {
       // const response = await fetch(`http://localhost:8080/auth/regist?code=${code}`);
-      const response = await fetch(`http://localhost:8080/auth/regist?code=${code}`, {
+      const response = await fetch(`https://cogit.kr/api/auth/regist?code=${code}`, {
         method: 'GET',
         // headers: {
         //   Authorization: `Bearer ${bearer}`,
