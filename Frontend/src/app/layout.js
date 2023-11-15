@@ -1,8 +1,11 @@
 import React from 'react';
 import localFont from 'next/font/local';
+<<<<<<< HEAD
 import Header from './Header';
 import { ProviderWrapper } from '@/redux/ProviderWrapper';
 import { MemberProvider } from './MemberContext';
+=======
+>>>>>>> b16ebcb (feat: / uri page.jsx 추가)
 
 const tMoney = localFont({
   src: [

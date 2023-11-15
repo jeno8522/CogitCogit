@@ -42,7 +42,7 @@ export default function Home() {
             start: scheduleStartAt,
             end: scheduleEndAt,
             color: 'white',
-            backgroundColor: colorPalette[(teamId % colorPalette.length)],
+            backgroundColor: colorPalette[teamId % colorPalette.length],
           })),
         ),
       ]);
