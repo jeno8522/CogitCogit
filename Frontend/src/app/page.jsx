@@ -1,24 +1,24 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import Login from './Login';
+import './globals.css';
 import Header from './Header';
 import Sidebar from './SideBar';
+import { useRouter } from 'next/navigation';
 
 function page({ children }) {
-  const [isLoggedIn, setIsLoggIn] = useState(false);
+  const [isLoaded, setisLoaded] = useState(false);
+  const router = useRouter();
   useEffect(() => {
-    if (localStorage.getItem('accessToken') !== null) {
-      setIsLoggIn(true);
+    if (localStorage.getItem('accessToken') === null) {
+      router.push('/login');
+    } else {
+      setisLoaded(true);
     }
   }, []);
 
-  useEffect(() => {
-    console.log('로그인 상태 변경', isLoggedIn);
-  }, [isLoggedIn]);
-
   return (
     <div>
-      {isLoggedIn ? (
+      {isLoaded ? (
         <>
           <Header />
           <div className="flex">
@@ -27,7 +27,7 @@ function page({ children }) {
           </div>
         </>
       ) : (
-        <Login />
+        <div>로딩중...</div>
       )}
     </div>
   );
