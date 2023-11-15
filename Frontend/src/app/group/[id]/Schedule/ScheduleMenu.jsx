@@ -14,7 +14,7 @@ function ScheduleMenu({ onClickSelectSchedule }) {
     <select
       name="selectSchedule"
       value={value}
-      className="mr-5 text-center bg-primary rounded-small"
+      className="mr-5 text-center bg-white rounded-small"
       onChange={selectChange}
     >
       {scheduleList.map((schedule) => {

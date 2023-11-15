@@ -51,11 +51,9 @@ const Schedule = ({ members, teamId }) => {
       });
     }
 
-    if (teamScheduleList.length == 0) {
-      return <div>일정이 존재하지 않습니다</div>;
+    if (teamScheduleList.length > 0) {
+      onClickSelectSchedule(teamScheduleList[0].id);
     }
-
-    onClickSelectSchedule(teamScheduleList[0].id);
   }, []);
 
   return (
@@ -64,7 +62,9 @@ const Schedule = ({ members, teamId }) => {
         <Section.Title className="justify-between mt-3">
           <div className="flex">
             <ScheduleIcon width={36} height={36} />
-            <ScheduleMenu onClickSelectSchedule={onClickSelectSchedule} />
+            {
+              teamScheduleList.length > 0 ? <ScheduleMenu onClickSelectSchedule={onClickSelectSchedule} /> : <div className='ml-2'>일정이 없습니다</div>
+            }
           </div>
         </Section.Title>
         <Section.ButtonList>
@@ -97,10 +97,19 @@ const Schedule = ({ members, teamId }) => {
         </Section.ButtonList>
       </div>
       <Section.Container>
-        <table className="w-[90%] text-center m-auto">
-          <THead questions={questions}></THead>
-          <TBody questions={questions} members={members}></TBody>
-        </table>
+        {
+          teamScheduleList.length > 0 ?
+            <table className="w-[90%] text-center m-auto">
+              <THead questions={questions}></THead>
+              <TBody questions={questions} members={members}></TBody>
+            </table>
+          :
+          <div>
+            <img className="pt-10 m-10" src="/images/cogit_gray.png" width={60} height={60} />
+            <div className='text-center'>일정이 없습니다</div>
+          </div>
+        }
+        
       </Section.Container>
     </Section>
   );
