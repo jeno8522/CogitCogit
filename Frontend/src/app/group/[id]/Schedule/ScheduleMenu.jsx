@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useMemberState } from '@/app/MemberContext';
 
-function ScheduleMenu({ onClickSelectSchedule, scheduleList }) {
+function ScheduleMenu({ onClickSelectSchedule }) {
   const [value, setValue] = useState();
+  const { scheduleList } = useMemberState();
 
   const selectChange = (e) => {
     setValue(e.target.value);

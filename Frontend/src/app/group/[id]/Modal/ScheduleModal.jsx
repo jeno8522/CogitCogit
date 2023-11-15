@@ -3,9 +3,10 @@ import { Modal } from '@/components/Modal';
 import { Input } from '@/components/Input';
 import Button from '@/components/Button';
 import Moment from 'moment';
-import "moment/locale/ko";
+import 'moment/locale/ko';
+import axios from '@/api/index';
 
-function ScheduleModal({ isOpen, onClose, teamId }) {  
+function ScheduleModal({ isOpen, onClose, teamId }) {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [scheduleName, setScheduleName] = useState();
@@ -14,26 +15,25 @@ function ScheduleModal({ isOpen, onClose, teamId }) {
     onClose();
   };
   const onClickAddSchedule = () => {
-    // fetchScheduleAdd();
-    
+    fetchScheduleAdd();
+
     onClose();
   };
 
   const handleChange = (e) => {
     setScheduleName(e.target.value);
-  }
+  };
 
   const fetchScheduleAdd = async () => {
-    const{
-      data : { data },
+    const {
+      data: { data },
     } = await axios.post(`/schedule/schedule/add`, {
       studyId: teamId,
       scheduleName,
-      scheduleStart:Moment(startDate).format('YYYY-MM-DD'),
-      scheduleEnd:Moment(endDate).format('YYYY-MM-DD'),
+      scheduleStart: Moment(startDate).format('YYYY-MM-DD'),
+      scheduleEnd: Moment(endDate).format('YYYY-MM-DD'),
     });
   };
-
 
   return (
     <Modal isOpen={isOpen}>

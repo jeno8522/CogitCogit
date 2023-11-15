@@ -8,24 +8,24 @@ import ScheduleModal from '../Modal/ScheduleModal';
 import QuestModal from '../Modal/QuestModal';
 import ScheduleMenu from './ScheduleMenu';
 import axios from '@/api/index';
+import { useMemberState } from '@/app/MemberContext';
 
-const Schedule = ({ members, scheduleList, teamId }) => {
+const Schedule = ({ members, teamId }) => {
   const [showScheduleModal, setScheduleModal] = useState(false);
   const [showQuestModal, setQuestModal] = useState(false);
   const [questions, setQuestions] = useState([]);
-  const [showScheduleMenu, setScheduleMenu] = useState(false);
-  const [scheduleIdx, setScheduleIdx] = useState(0);
+  const { scheduleList } = useMemberState();
+  const [teamScheduleList, setTeamScheduleList] = useState([]);
+  var scheduleId = 0;
 
-  const onClickScheduleMenu = () => {
-    setScheduleMenu((prev) => !prev);
-  };
   const onClickScheduleModal = () => {
     setScheduleModal((prev) => !prev);
   };
   const onClickQuestModal = () => {
     setQuestModal((prev) => !prev);
   };
-  const onClickSelectSchedule = (value) => {
+  const onClickSelectSchedule = async (value) => {
+    scheduleId = value;
     fetchSchduelQuest(value);
   };
 
@@ -37,11 +37,25 @@ const Schedule = ({ members, scheduleList, teamId }) => {
   };
 
   useEffect(() => {
-    if (scheduleList.length == 0) {
+    {
+      scheduleList.map((schedule) => {
+        if (schedule.teamId == teamId) {
+          setTeamScheduleList((prevTeamList) => [
+            ...prevTeamList,
+            ...schedule.map(({ id, teamName }) => ({
+              id,
+              teamName,
+            })),
+          ]);
+        }
+      });
+    }
+
+    if (teamScheduleList.length == 0) {
       return <div>일정이 존재하지 않습니다</div>;
     }
-    setScheduleIdx(0);
-    fetchSchduelQuest();
+
+    onClickSelectSchedule(teamScheduleList[0].id);
   }, []);
 
   return (
@@ -61,7 +75,11 @@ const Schedule = ({ members, scheduleList, teamId }) => {
             문제 추가
           </Button>
           {showQuestModal && (
-            <QuestModal isOpen={showQuestModal} onClose={onClickQuestModal} scheduleId={1} />
+            <QuestModal
+              isOpen={showQuestModal}
+              onClose={onClickQuestModal}
+              scheduleId={scheduleId}
+            />
           )}
           <Button
             className="items-center p-5 m-1 bg-primary rounded-small"

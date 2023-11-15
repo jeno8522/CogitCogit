@@ -11,35 +11,42 @@ import GroupIcon from '@/icons/group.svg';
 import MemberManagementModal from './Modal/MemberManagementModal';
 import MemberAddModal from './Modal/MemberAddModal';
 import axios from '@/api/index';
+import { useMemberState } from '@/app/MemberContext';
 
 function Group({ params }) {
   const [showMemberManagementModal, setMemberManagementModal] = useState(false);
   const [showMemberAddModal, setMemberAddModal] = useState(false);
+
+  const { teamList } = useMemberState();
+
   const [teamInfo, setTeamInfo] = useState({
     teamId: '',
     teamName: '',
-    scheduleList: [
-      {
-        scheduleId: '',
-        scheduleName: '',
-        scheduleStartAt: '',
-        scheduleEndAt: '',
-      },
-    ],
   });
-  const teamId = params.id;
+
   const [members, setMembers] = useState([]);
 
   const fetchTeamMember = async () => {
     const {
       data: { data },
-    } = await axios.get(`/study/memberList?teamId=${teamId}`);
+    } = await axios.get(`/study/memberList?teamId=${teamInfo.teamId}`);
     setMembers(data);
   };
 
-  const fetchTeamInfo = async () => {
-    const { data } = await axios.get(`/schedule/team?teamId=${teamId}`);
-    setTeamInfo(data);
+  const TeamInfo = () => {
+    console.log(teamList);
+    {
+      teamList.map((team) => {
+        console.log(team.id);
+        if (team.id == params.id) {
+          setTeamInfo({
+            teamId: team.id,
+            teamName: team.teamName,
+          });
+          return;
+        }
+      });
+    }
   };
 
   const onClickMemberManagementModal = () => {
@@ -52,8 +59,9 @@ function Group({ params }) {
   };
 
   useEffect(() => {
-    fetchTeamInfo();
+    TeamInfo();
     fetchTeamMember();
+    console.log(teamList);
   }, []);
 
   return (
@@ -87,10 +95,10 @@ function Group({ params }) {
         </div>
       </div>
       <div className="flex justify-center w-full">
-        <Ranking teamId={teamId} />
+        <Ranking teamId={teamInfo.teamId} />
       </div>
       <div className="flex justify-between w-full h-[500px]">
-        <Schedule members={members} scheduleList={teamInfo.scheduleList} teamId={teamId}/>
+        <Schedule members={members} teamId={teamInfo.teamId} />
         <AlgoSite />
       </div>
     </div>
