@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal } from '@/components/Modal';
 import Button from '@/components/Button';
 import AddAlgorithmQuest from './AddAlgorithmQuest';
@@ -6,12 +6,12 @@ import PlusIcon from '@/icons/plus.svg';
 import CloseIcon from '@/icons/close.svg';
 import axios from '@/api/index';
 
-function QuestModal({ isOpen, onClose, scheduleId }) {
+const QuestModal = ({ isOpen, onClose, scheduleId }) => {
   const [inputList, setInputList] = useState([
     {
-      platform: 'boj',
-      number: ''
-    }
+      platform: 'BOJ',
+      questNumber: '',
+    },
   ]);
 
   const onClickClose = () => {
@@ -19,24 +19,27 @@ function QuestModal({ isOpen, onClose, scheduleId }) {
   };
 
   const fetchQuestAdd = async () => {
-    const{
-      data : { data },
+    const {
+      data: { data },
     } = await axios.post(`/schedule/quest/add`, {
       scheduleId,
-      algorithmQuestList: investmentData.firstInvestmentAmount,
+      algorithmQuestList: inputList,
     });
   };
 
   const onClickAddQuest = () => {
-    // fetchQuestAdd();
+    fetchQuestAdd();
     onClose();
-  }
+  };
 
-  const onCreate = () => {    
-    setInputList([...inputList, {
-      platform: 'boj',
-      number: ''
-    }]);
+  const onCreate = () => {
+    setInputList([
+      ...inputList,
+      {
+        platform: 'BOJ',
+        questNumber: '',
+      },
+    ]);
   };
   const onClickDelete = () => {
     setInputList([]);
@@ -44,20 +47,19 @@ function QuestModal({ isOpen, onClose, scheduleId }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const arr = name.split(" ");
-    console.log(arr[0] + " : " + arr[1])
+    const arr = name.split(' ');
+    console.log(arr[0] + ' : ' + arr[1]);
 
-    if(arr[0] == 'platform') {
+    if (arr[0] == 'platform') {
       inputList[parseInt(arr[1])].platform = value;
       setInputList([...inputList]);
     } else {
-      if(!isNaN(value)) {
-        inputList[parseInt(arr[1])].number = value;
+      if (!isNaN(value)) {
+        inputList[parseInt(arr[1])].questNumber = value;
         setInputList([...inputList]);
       } else {
-        alert('숫자로 입력해주세요.')
+        alert('숫자로 입력해주세요.');
       }
-
     }
   };
 
@@ -98,6 +100,6 @@ function QuestModal({ isOpen, onClose, scheduleId }) {
       </Modal.Dimmed>
     </Modal>
   );
-}
+};
 
 export default QuestModal;

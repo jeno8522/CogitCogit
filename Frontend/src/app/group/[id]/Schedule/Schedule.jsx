@@ -4,7 +4,6 @@ import TBody from './TBody';
 import THead from './THead';
 import Button from '@/components/Button';
 import ScheduleIcon from '@/icons/schedule.svg';
-import DropdownIcon from '@/icons/dropdown.svg';
 import ScheduleModal from '../Modal/ScheduleModal';
 import QuestModal from '../Modal/QuestModal';
 import ScheduleMenu from './ScheduleMenu';
@@ -27,14 +26,13 @@ const Schedule = ({ members, scheduleList, teamId }) => {
     setQuestModal((prev) => !prev);
   };
   const onClickSelectSchedule = (value) => {
-    setScheduleIdx(value);
-    fetchSchduelQuest();
+    fetchSchduelQuest(value);
   };
 
-  const fetchSchduelQuest = async () => {
+  const fetchSchduelQuest = async (value) => {
     const {
       data: { data },
-    } = await axios.get(`/schedule?scheduleId=${scheduleList[0].scheduleId}`);
+    } = await axios.get(`/schedule?scheduleId=${value}`);
     setQuestions(data);
   };
 
@@ -52,14 +50,7 @@ const Schedule = ({ members, scheduleList, teamId }) => {
         <Section.Title className="justify-between mt-3">
           <div className="flex">
             <ScheduleIcon width={36} height={36} />
-            {/* <p className="ml-2">{scheduleList[scheduleIdx].scheduleName}</p> */}
-            <DropdownIcon
-              className="mt-2 ml-3"
-              width={20}
-              height={20}
-              onClick={onClickScheduleMenu}
-            />
-            {showScheduleMenu && <ScheduleMenu onCloseMenu={() => setMenu(false)} />}
+            <ScheduleMenu onClickSelectSchedule={onClickSelectSchedule} />
           </div>
         </Section.Title>
         <Section.ButtonList>
@@ -70,11 +61,7 @@ const Schedule = ({ members, scheduleList, teamId }) => {
             문제 추가
           </Button>
           {showQuestModal && (
-            <QuestModal
-              isOpen={showQuestModal}
-              onClose={onClickQuestModal}
-              scheduleId={scheduleList[0].scheduleId}
-            />
+            <QuestModal isOpen={showQuestModal} onClose={onClickQuestModal} scheduleId={1} />
           )}
           <Button
             className="items-center p-5 m-1 bg-primary rounded-small"
