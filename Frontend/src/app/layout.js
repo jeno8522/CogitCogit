@@ -1,7 +1,7 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
 import localFont from 'next/font/local';
-import RootLayoutClient from './layout.client.js';
+
 const tMoney = localFont({
   src: [
     {
@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ko" className={tMoney.className}>
       <body>
-        <RootLayoutClient>{children}</RootLayoutClient>
+        <div>{children}</div>
       </body>
     </html>
   );
