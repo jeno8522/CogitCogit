@@ -69,7 +69,13 @@ const Schedule = ({ members, scheduleList, teamId }) => {
           >
             문제 추가
           </Button>
-          {showQuestModal && <QuestModal isOpen={showQuestModal} onClose={onClickQuestModal} scheduleId={scheduleList[0].scheduleId} />}
+          {showQuestModal && (
+            <QuestModal
+              isOpen={showQuestModal}
+              onClose={onClickQuestModal}
+              scheduleId={scheduleList[0].scheduleId}
+            />
+          )}
           <Button
             className="items-center p-5 m-1 bg-primary rounded-small"
             onClick={onClickScheduleModal}
@@ -77,7 +83,11 @@ const Schedule = ({ members, scheduleList, teamId }) => {
             일정 추가
           </Button>
           {showScheduleModal && (
-            <ScheduleModal isOpen={showScheduleModal} onClose={onClickScheduleModal} teamId={teamId}/>
+            <ScheduleModal
+              isOpen={showScheduleModal}
+              onClose={onClickScheduleModal}
+              teamId={teamId}
+            />
           )}
         </Section.ButtonList>
       </div>
