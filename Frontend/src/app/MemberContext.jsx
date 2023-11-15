@@ -7,14 +7,21 @@ const MemberDispatchContext = createContext(null);
 
 const initialState = {
   teamList: [],
-  };
+  schedulList: [],
+};
 
 function reducer(state, action) {
   switch (action.type) {
-    case 'SET_MYPAGE':
+    case 'SET_TEAMLIST':
       return {
         ...state,
-        teamList: action.teamList
+        teamList: action.teamList,
+      };
+
+    case 'SET_SCHEDULELIST':
+      return {
+        ...state,
+        scheduleList: action.scheduleList,
       };
 
     case 'RESET':

@@ -8,7 +8,7 @@ export const userSlice = createSlice({
     nickname: '',
     gitUrl: '',
     profileImage: '',
-    isLogin: false,
+    isLogin: true,
   },
   reducers: {
     login: (state, action) => {
