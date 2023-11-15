@@ -5,6 +5,7 @@ import CommentIcon from '@/icons/comment.svg'
 import PrevIcon from '@/icons/prev.svg'
 import Comment from './Comment';
 import Button from '@/components/Button';
+import CodeViewer from './CodeViewer';
 
 function CodeDetail() {
   return (
@@ -19,8 +20,9 @@ function CodeDetail() {
               <PrevIcon alt="prevIcon" width={36} height={36} />
             </Button>
           </Section.Title>
-          <Section.Container>
-          </Section.Container>
+          <div className='h-[80%]'>
+            <CodeViewer/>
+          </div>
         </Section>
         <Section className="h-[86vh] w-[30vw] p-5">
           <Section.Title>
