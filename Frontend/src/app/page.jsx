@@ -14,6 +14,8 @@ export default function Home() {
   const dispatch = useMemberDispatch();
 
   const colorPalette = ['#B02BFF', '#FF127C', '#FFBB19', '#ADE600', '#00A6FF', '#00C6A1'];
+  const [teamList, setTeamList] = useState([]);
+  const [scheduleList, setScheduleList] = useState([]);
 
   const [teamList, setTeamList] = useState([]);
   const [scheduleList, setScheduleList] = useState([]);
