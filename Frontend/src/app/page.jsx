@@ -17,9 +17,6 @@ export default function Home() {
   const [teamList, setTeamList] = useState([]);
   const [scheduleList, setScheduleList] = useState([]);
 
-  const [teamList, setTeamList] = useState([]);
-  const [scheduleList, setScheduleList] = useState([]);
-
   const fetchData = async () => {
     const {
       data: { data },
