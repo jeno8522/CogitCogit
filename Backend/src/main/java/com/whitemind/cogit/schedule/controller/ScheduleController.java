@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ScheduleController {
     private final ScheduleService scheduleService;
 
-    @GetMapping("myStudy")
+    @GetMapping("/my-study")
     public ListResponseResult<GetStudyDetailResponse> getAllStudyDetail(HttpServletRequest request) throws Exception {
         log.info("getMyAllStudyDetail | 속한 스터디의 모든 일정 조회");
         return new ListResponseResult<>(scheduleService.getAllStudyDetail(request));
