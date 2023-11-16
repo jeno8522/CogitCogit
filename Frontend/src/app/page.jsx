@@ -21,7 +21,7 @@ export default function Home() {
   const fetchData = async () => {
     const {
       data: { data },
-    } = await axios.get('/schedule/myStudy/');
+    } = await axios.get('/schedule/my-study/');
 
     console.log(data);
 
