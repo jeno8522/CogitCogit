@@ -6,8 +6,6 @@ const instance = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
-    // Accept: 'application/json',
-    // Authorization: 'Bearer ' + `${process.env.NEXT_PUBLIC_TOKEN}`,
   },
 });
 
