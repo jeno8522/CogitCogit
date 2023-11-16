@@ -13,13 +13,13 @@ function sendCode(
     const cogitData = result.cogit;
 
     if (cogitData === undefined) {
-      console.log('코깃 데이터 없음');
+      console.error('코깃 데이터 없음');
       return;
     }
 
     jwt = cogitData.Authorization;
     if (jwt === undefined) {
-      console.log('토큰 없음');
+      console.error('토큰 없음');
       return;
     }
     function executeRequestWithToken(token) {
@@ -42,12 +42,9 @@ function sendCode(
       })
         .then((response) => {
           if (response.ok) {
-            console.log(response.status);
-            console.log(response);
-            console.log(response.ok);
+            console.log('코드 전송 성공');
             return response.text();
           } else {
-            console.log(response.status);
             if (response.status === 401) {
               refreshAccessToken()
                 .then((newToken) => {
@@ -63,7 +60,7 @@ function sendCode(
           }
         })
         .catch((error) => {
-          console.error(error);
+          console.error('코드를 전송하지 못했습니다.');
         });
     }
 

@@ -12,13 +12,10 @@ const SCOPES = [
 ];
 
 document.addEventListener('DOMContentLoaded', function () {
-
   let imageLogo = document.getElementById('imageLogo');
   let text = document.querySelector('#active p');
   chrome.storage.local.get('active', function (result) {
     if (result.active) {
-      console.log('존재');
-      console.log(result.active);
       if (result.active == 'active') {
         imageLogo.src = './assets/images/pets.png';
         text.textContent = 'activation';
@@ -29,9 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
         text.style.color = '#D9D9D9';
       }
     } else {
-      console.log('비존재');
       chrome.storage.local.set({ active: 'active' }).then(() => {
-        console.log('Value is set');
         imageLogo.src = './assets/images/pets.png';
         text.textContent = 'activation';
         text.style.color = '#F79F5F';
@@ -43,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   activeBtn.addEventListener('click', function () {
     chrome.storage.local.get('active', function (result) {
-      console.log('Value currently is ' + result.active);
       if (result.active == 'active') {
         imageLogo.src = './assets/images/pets_grey.png';
         text.textContent = 'deactivation';
@@ -66,7 +60,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     chrome.storage.local.set({ pipe_cogit: true }, () => {
       // opening pipe temporarily
-
       chrome.tabs.create({ url, selected: true }, function () {
         window.close();
       });

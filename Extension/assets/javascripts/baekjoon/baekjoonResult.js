@@ -9,11 +9,8 @@ if (solutionElements.length > 0) {
 
   let preContent = spanElement.textContent;
 
-  console.log(preContent);
-  
   let isActive = false;
   chrome.storage.local.get('active', function (result) {
-    console.log(result.active);
     if (result.active) {
       if (result.active == 'active') {
         isActive = true;
@@ -111,6 +108,6 @@ if (solutionElements.length > 0) {
       }
     }, 2000);
   } else {
-    console.log('코드를 전송하지 않았습니다.');
+    console.log('이미 전송한 코드입니다.');
   }
 }

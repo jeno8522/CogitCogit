@@ -14,8 +14,6 @@ function parseAccessCode(url) {
 
 // 코깃코깃 서비스 로그인
 function requestCogitLogin(code) {
-  // console.log('parameter', code);
-
   fetch(`https://cogit.kr/api/auth/regist?code=${code}`, {
     method: 'GET',
     headers: {
@@ -27,11 +25,8 @@ function requestCogitLogin(code) {
       'Access-Control-Allow-Headers': 'Content-Type',
     },
   }).then((response) => {
-    // 응답헤어 로큰 익스텐션 로컬스토리지 저장
-    // console.log(response.headers.get('Authorization'));
-
     if (response.status !== 200) {
-      console.log('유저 등록에 실패했습니다.');
+      console.error('유저 등록에 실패했습니다.');
       return;
     }
     // 읽기 함수 정의
@@ -46,13 +41,13 @@ function requestCogitLogin(code) {
         // 저장 되었는지 확인
         chrome.storage.local.get('cogit', (data) => {
           // 로컬스토리지에 cogit 데이터 등록
-          localStorage.setItem('cogit', JSON.stringify(data.cogit));
+          localStorage.setItem('cogit', JSON.stringify(data.cogit)); //토큰
+          console.log('코깃코깃 로그인 성공');
 
           response.json().then((res) => {
-            localStorage.setItem('cogit_member', JSON.stringify(res.data));
+            localStorage.setItem('cogit_member', JSON.stringify(res.data)); //멤버 정보
           });
         });
-        // window.close();
       }
     );
   });
@@ -60,10 +55,7 @@ function requestCogitLogin(code) {
 }
 
 /* Check for open pipe */
-if (
-  window.location.host === 'cogit.kr' &&
-  window.location.href.includes('?code=')
-) {
+if (window.location.host === 'cogit.kr' && window.location.href.includes('?code=')) {
   const link = window.location.href;
   chrome.storage.local.get('pipe_cogit', (data) => {
     if (data && data.pipe_cogit) {
@@ -120,7 +112,8 @@ function refreshAccessToken() {
           );
         })
         .catch((error) => {
-          console.error(error);
+          // console.error(error);
+          console.error('코깃코깃 로그인 실패');
           reject(error); // Promise 실패
         });
     });
