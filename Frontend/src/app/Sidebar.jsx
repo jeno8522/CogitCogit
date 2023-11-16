@@ -27,9 +27,16 @@ function Sidebar() {
             <Link href={`/group/${team.id}`}>{team.teamName}</Link>
           </Button>
         ))}
-        <Button className="py-3 my-1 text-xl rounded-large hover:bg-hover">내 코드보기</Button>
         <Button className="py-3 my-1 text-xl rounded-large hover:bg-hover">
-          익스텐션 사용하기
+          <Link href="/mycode">내 코드보기</Link>
+        </Button>
+        <Button className="py-3 my-1 text-xl rounded-large hover:bg-hover">
+          <Link
+            href="https://chromewebstore.google.com/detail/%EC%BD%94%EA%B9%83%EC%BD%94%EA%B9%83-%EC%9D%B5%EC%8A%A4%ED%85%90%EC%85%98/cmjbobieohgjhfflhokcdfnhinmphojk?hl=ko"
+            target="_blank"
+          >
+            익스텐션 사용하기
+          </Link>
         </Button>
       </div>
     </div>
