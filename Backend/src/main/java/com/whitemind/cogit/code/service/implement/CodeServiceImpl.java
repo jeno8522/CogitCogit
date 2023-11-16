@@ -176,7 +176,10 @@ public class CodeServiceImpl implements CodeService {
                         .codeId(code.getCodeId())
                         .codeSolved(code.isCodeSolved())
                         .codeLanguage(code.getLanguage())
-                        .codeRunningTime(code.getCodeRunningTime()).build());
+                        .codeRunningTime(code.getCodeRunningTime())
+                        .AlgorithmQuestNumber(algorithmQuest.getAlgorithmQuestNumber())
+                        .AlgorithmQuestPlatform(algorithmQuest.getAlgorithmQuestPlatform().getValue())
+                        .createAt(code.getCreatedAt()).build());
             }
         }
         return getCodeHistoryResponseList;
@@ -204,6 +207,9 @@ public class CodeServiceImpl implements CodeService {
                         .codeLanguage(code.getLanguage())
                         .codeRunningTime(code.getCodeRunningTime())
                         .codeSolved(code.isCodeSolved())
+                        .AlgorithmQuestNumber(memberAlgorithmQuest.getAlgorithmQuest().getAlgorithmQuestNumber())
+                        .AlgorithmQuestPlatform(memberAlgorithmQuest.getAlgorithmQuest().getAlgorithmQuestPlatform().getValue())
+                        .createAt(code.getCreatedAt())
                         .build());
                 }
             }
