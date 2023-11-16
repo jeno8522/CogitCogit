@@ -6,6 +6,7 @@ import MyPage from './mypage/[id]/page';
 import { useMemberDispatch } from '@/app/MemberContext';
 import axios from '@/api/index';
 import Login from './login/page';
+import Sidebar from './Sidebar';
 
 export default function Home() {
   const isLogin = useSelector((state) => state.user.isLogin);
@@ -75,8 +76,11 @@ export default function Home() {
   if (isLogin) {
     return (
       <>
-        <div className="w-full bg-[#F4F6FA]">
-          <MyPage params={{ id: nickname }} />
+        <div className="flex">
+          <Sidebar nickname={nickname} />
+          <div className="w-full bg-[#F4F6FA]">
+            <MyPage params={{ id: nickname }} />
+          </div>
         </div>
       </>
     );
