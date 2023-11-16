@@ -4,10 +4,12 @@ import Button from '@/components/Button';
 import React from 'react';
 import PlusIcon from '@/icons/plus.svg';
 import { useMemberState } from '@/app/MemberContext';
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
-function Sidebar({ nickname }) {
+function Sidebar() {
   const { teamList } = useMemberState();
+  const nickname = useSelector((state) => state.user.nickname);
 
   return (
     <div className="flex flex-col w-1/6 h-[93vh] px-3 pl-3 border-r-2 border-gray-400 bg-background">

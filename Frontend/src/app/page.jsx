@@ -77,7 +77,7 @@ export default function Home() {
     return (
       <>
         <div className="flex">
-          <Sidebar nickname={nickname} />
+          <Sidebar />
           <div className="w-full bg-[#F4F6FA]">
             <MyPage params={{ id: nickname }} />
           </div>
