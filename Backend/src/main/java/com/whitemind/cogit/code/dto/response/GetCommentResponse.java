@@ -14,6 +14,7 @@ public class GetCommentResponse {
     int commentLineNumber;
     int memberId;
     String memberNickname;
+    String memberProfileImage;
     String commentContent;
     LocalDateTime createAt;
 }

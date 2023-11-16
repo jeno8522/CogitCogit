@@ -53,6 +53,7 @@ public class CommentServiceImpl implements CommentService {
                 .commentId(comment.getCommentId())
                 .memberId(comment.getMember().getMemberId())
                 .memberNickname(comment.getMember().getMemberNickname())
+                .memberProfileImage(comment.getMember().getMemberProfileImage())
                 .commentLineNumber(comment.getCommentLineNumber())
                 .commentContent(comment.getCommentContent())
                 .createAt(comment.getCreatedAt())
