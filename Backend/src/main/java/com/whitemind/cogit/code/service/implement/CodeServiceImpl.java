@@ -186,6 +186,21 @@ public class CodeServiceImpl implements CodeService {
     }
 
     @Override
+    public List<GetCodeHistoryResponse> getMyAllCodeHistory(int page, HttpServletRequest request) {
+        log.info("getMyAllCodeHistory | 내 전체 코드 제출 기록 조회");
+        Member member = memberRepository.findMembersByMemberId((int) request.getAttribute("memberId"));
+        List<Code> codeList = codeRepository.findByMemberIdByPage(member.getMemberId(), PageRequest.of(page, 10)).getContent();
+        return codeList.stream().map(code -> GetCodeHistoryResponse.builder()
+                .codeId(code.getCodeId())
+                .codeSolved(code.isCodeSolved())
+                .codeLanguage(code.getLanguage())
+                .codeRunningTime(code.getCodeRunningTime())
+                .AlgorithmQuestNumber(code.getAlgorithmQuest().getAlgorithmQuestNumber())
+                .AlgorithmQuestPlatform(code.getAlgorithmQuest().getAlgorithmQuestPlatform().getValue())
+                .createAt(code.getCreatedAt()).build()).collect(Collectors.toList());
+    }
+
+    @Override
     public List<GetCodeHistoryResponse> getCodeHistory(int memberId, int scheduleId) {
         log.info("getCodeHistory | 코드 제출 기록 조회");
         Schedule schedule = scheduleRepository.findByScheduleId(scheduleId);

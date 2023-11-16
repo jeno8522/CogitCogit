@@ -15,4 +15,6 @@ public interface CodeService {
     List<GetCodeHistoryResponse> getCodeHistory(int memberId, int scheduleId);
 
     List<GetCodeHistoryResponse> getMyCodeHistory(int questId, String platform, int page, HttpServletRequest request);
+
+    List<GetCodeHistoryResponse> getMyAllCodeHistory(int page, HttpServletRequest request);
 }
