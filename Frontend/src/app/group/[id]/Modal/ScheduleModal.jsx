@@ -27,9 +27,10 @@ function ScheduleModal({ isOpen, onClose, teamId }) {
   const fetchScheduleAdd = async () => {
     const {
       data: { data },
-    } = await axios.post(`/schedule/schedule/add`, {
+    } = await axios.post(`/schedule/add`, {
       studyId: teamId,
       scheduleName,
+      algorithmQuestList: [],
       scheduleStart: Moment(startDate).format('YYYY-MM-DD'),
       scheduleEnd: Moment(endDate).format('YYYY-MM-DD'),
     });

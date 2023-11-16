@@ -33,7 +33,7 @@ function Group({ params }) {
   const fetchTeamMember = async () => {
     const {
       data: { data },
-    } = await axios.get(`/study/memberList?teamId=${teamInfo.teamId}`);
+    } = await axios.get(`/study/memberList?teamId=${params.id}`);
     setMembers(data);
   };
 
@@ -64,7 +64,7 @@ function Group({ params }) {
 
   const onClickMemberDeleteModal = () => {
     setMemberDeleteModal((prev) => !prev);
-  }
+  };
 
   const onClickDeleteMember = async () => {
     const {
@@ -73,7 +73,7 @@ function Group({ params }) {
       teamId: teamInfo.teamId,
       memberId: userId,
     });
-  }
+  };
 
   useEffect(() => {
     TeamInfo();
@@ -95,8 +95,10 @@ function Group({ params }) {
           >
             <SettingIcon alt="settingIcon" width={36} height={36} />
           </Button>
-          <Button className="p-1 mb-3 rounded-small bg-hover hover:bg-warning"
-          onClick={onClickMemberDeleteModal}>
+          <Button
+            className="p-1 mb-3 rounded-small bg-hover hover:bg-warning"
+            onClick={onClickMemberDeleteModal}
+          >
             <ExitIcon alt="settingIcon" width={36} height={36} />
           </Button>
           {showMemberManagementModal && (
@@ -108,18 +110,26 @@ function Group({ params }) {
             />
           )}
           {showMemberAddModal && (
-            <MemberAddModal isOpen={showMemberAddModal} onClose={onClickAddMember} teamId={teamInfo.teamId}/>
+            <MemberAddModal
+              isOpen={showMemberAddModal}
+              onClose={onClickAddMember}
+              teamId={teamInfo.teamId}
+            />
           )}
           {showMemberDeleteModal && (
-            <MemberDeleteModal isOpen={showMemberDeleteModal} onClose={() => setMemberDeleteModal(false)} onClickDeleteMember={onClickDeleteMember}/>
+            <MemberDeleteModal
+              isOpen={showMemberDeleteModal}
+              onClose={() => setMemberDeleteModal(false)}
+              onClickDeleteMember={onClickDeleteMember}
+            />
           )}
         </div>
       </div>
       <div className="flex justify-center w-full">
-        <Ranking teamId={teamInfo.teamId} />
+        <Ranking teamId={params.id} />
       </div>
       <div className="flex justify-between w-full h-[500px]">
-        <Schedule members={members} teamId={teamInfo.teamId} />
+        <Schedule members={members} teamId={params.id} />
         <AlgoSite />
       </div>
     </div>

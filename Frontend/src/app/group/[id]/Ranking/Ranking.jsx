@@ -31,7 +31,12 @@ const Ranking = ({ teamId }) => {
       <Section.Container>
         <div className="flex justify-center mb-4">
           {members.map((member, idx) => (
-            <RankCard nickname={member.memberName} key={idx} idx={idx}></RankCard>
+            <RankCard
+              nickname={member.memberName}
+              url={member.memberProfileImage}
+              key={idx}
+              idx={idx}
+            ></RankCard>
           ))}
         </div>
       </Section.Container>
