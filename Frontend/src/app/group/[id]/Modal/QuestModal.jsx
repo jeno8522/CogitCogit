@@ -6,7 +6,7 @@ import PlusIcon from '@/icons/plus.svg';
 import CloseIcon from '@/icons/close.svg';
 import axios from '@/api/index';
 
-const QuestModal = ({ isOpen, onClose, scheduleId }) => {
+const QuestModal = ({ isOpen, onClose, scheduleId, fetchSchduelQuest }) => {
   const [inputList, setInputList] = useState([
     {
       platform: 'BOJ',
@@ -25,6 +25,7 @@ const QuestModal = ({ isOpen, onClose, scheduleId }) => {
       scheduleId,
       algorithmQuestList: inputList,
     });
+    fetchSchduelQuest(scheduleId);
   };
 
   const onClickAddQuest = () => {
