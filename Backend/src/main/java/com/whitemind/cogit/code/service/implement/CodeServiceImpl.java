@@ -201,6 +201,11 @@ public class CodeServiceImpl implements CodeService {
     }
 
     @Override
+    public int getMemberCodeId(int memberId, int algorithmQuestId) {
+        return codeRepository.findFirstByMemberIdAndAlgorithmQuestId(memberId, algorithmQuestId);
+    }
+
+    @Override
     public List<GetCodeHistoryResponse> getCodeHistory(int memberId, int scheduleId) {
         log.info("getCodeHistory | 코드 제출 기록 조회");
         Schedule schedule = scheduleRepository.findByScheduleId(scheduleId);
