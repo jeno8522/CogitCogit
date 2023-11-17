@@ -1,55 +1,55 @@
 # 리드미
 
 # CogitCogit
-<p align="center">
+
+<div align="center">
   <img src="./docs/images/cogit.png" width="200px" height="200px">
-</p>
+</div>
 
 ## 📖목차
 
 - CogitCogit
-    - [📖목차](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-    - [프로젝트 진행 기간](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-    - [❤ 팀 소개](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-        - [팀명](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-        - [팀원 소개](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-        - [Frontend](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-        - [Backend](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-    - [🎉 프로젝트 요약](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-    - [✨주요 기능 및 구현](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-    - [🖥 서비스 화면](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-    - [🏗️ 아키텍쳐](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-    - [🛠 기술 스택](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-    - [📂 파일 구조](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-    - [📝 설계 문서](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-        - [ERD](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-        - [API](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-        - [FIGMA](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
+  - [📖목차](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
+  - [프로젝트 진행 기간](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
+  - [❤ 팀 소개](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
+    - [팀명](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
+    - [팀원 소개](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
+    - [Frontend](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
+    - [Backend](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
+  - [🎉 프로젝트 요약](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
+  - [✨주요 기능 및 구현](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
+  - [🖥 서비스 화면](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
+  - [🏗️ 아키텍쳐](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
+  - [🛠 기술 스택](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
+  - [📂 파일 구조](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
+  - [📝 설계 문서](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
+    - [ERD](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
+    - [API](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
+    - [FIGMA](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
 - [💻 구동 방법](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-
 
 ```markdown
 - CogitCogit
-    - [프로젝트 진행 기간](#-프로젝트-진행-기간)
-    - [❤ 팀 소개](#-❤-팀-소개)
-        - [팀명](#-팀명)
-        - [팀원 소개](#팀원-소개)
-        - [Frontend](#Frontend)
-        - [Backend](#Backend)
-    - [🎉 프로젝트 요약](#🎉-프로젝트-요약)
-    - [✨주요 기능 및 구현](#✨주요-기능-및-구현)
-    - [🖥 서비스 화면](#🖥-서비스-화면)
-    - [🏗️ 아키텍쳐](#🏗️-아키텍쳐)
-    - [🛠 기술 스택](#🛠-기술-스택)
-    - [📂 파일 구조](#📂-파일-구조)
-    - [📝 설계 문서](#📝-설계-문서)
-        - [ERD](#erd)
-        - [API](#api)
-        - [FIGMA](#figma)
+  - [프로젝트 진행 기간](#-프로젝트-진행-기간)
+  - [❤ 팀 소개](#-❤-팀-소개)
+    - [팀명](#-팀명)
+    - [팀원 소개](#팀원-소개)
+    - [Frontend](#Frontend)
+    - [Backend](#Backend)
+  - [🎉 프로젝트 요약](#🎉-프로젝트-요약)
+  - [✨주요 기능 및 구현](#✨주요-기능-및-구현)
+  - [🖥 서비스 화면](#🖥-서비스-화면)
+  - [🏗️ 아키텍쳐](#🏗️-아키텍쳐)
+  - [🛠 기술 스택](#🛠-기술-스택)
+  - [📂 파일 구조](#📂-파일-구조)
+  - [📝 설계 문서](#📝-설계-문서)
+    - [ERD](#erd)
+    - [API](#api)
+    - [FIGMA](#figma)
 - [💻 구동 방법](#💻-구동-방법)
 - [💾 결과물](#💾-결과물)
-    - [UCC](#ucc)
-    - [시연 영상](#시연-영상)
+  - [UCC](#ucc)
+  - [시연 영상](#시연-영상)
 ```
 
 ---
@@ -67,30 +67,29 @@
 ### 팀명
 
 > 📢 하얀마음 109 (A109)
-> 
 
 ### 팀원 소개
 
 ### Front
 
-|  |  |
-| --- | --- |
+|                                                                               |                                                                               |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | <img src="./docs/images/이현구.png" width="200px" height="200px" /><br>이현구 | <img src="./docs/images/연제정.png" width="200px" height="200px" /><br>연제정 |
 
 ---
 
 ### Backend
 
-|  |  |  |
-| --- | --- | --- |
+|                                                                               |                                                                               |                                                                               |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | <img src="./docs/images/박성준.png" width="200px" height="200px" /><br>박성준 | <img src="./docs/images/박현철.png" width="200px" height="200px" /><br>박현철 | <img src="./docs/images/임하은.png" width="200px" height="200px" /><br>임하은 |
 
 ---
 
 ### Infra
 
-|  |
-| --- |
+|                                                                               |
+| ----------------------------------------------------------------------------- |
 | <img src="./docs/images/주창훈.png" width="200px" height="200px" /><br>주창훈 |
 
 ---
@@ -124,34 +123,34 @@
 
 <summary>크롬 익스텐션 팝업</summary>
 <div markdown="1">
-<img src="./docs/images/익스텐션.png" width="200px" />
+<img src="./docs/images/익스텐션.png" width="400px" />
 </div>
 
 <summary>백준/프로그래머스 문제 업로드</summary>
 <div markdown="1">
-<img src="./docs/images/백준_업로드.png" width="200px" />
-<img src="./docs/images/프로그래머스_업로드.png" width="200px" />
+<img src="./docs/images/백준_업로드.png" width="400x" /><br>
+<img src="./docs/images/프로그래머스_업로드.png" width="400px" />
 </div>
 
 <summary>GitHub repository 생성</summary>
 <div markdown="1">
-<img src="./docs/images/깃허브_리퍼지토리.png" width="200px" />
+<img src="./docs/images/깃허브_리퍼지토리.png" width="400px" />
 </div>
 
 <summary>내 스터디 일정 확인</summary>
 <div markdown="1">
-<img src="./docs/images/마이페이지.png" width="200px" />
+<img src="./docs/images/마이페이지.png" width="400px" />
 </div>
 
 <summary>그룹 페이지</summary>
 
 <div markdown="1">
-<img src="./docs/images/그룹페이지.png" width="200px" />
+<img src="./docs/images/그룹페이지.png" width="400px" />
 </div>
 
 <summary>코드 리뷰</summary>
 <div markdown="1">
-<img src="./docs/images/코드리뷰.png" width="200px" />
+<img src="./docs/images/코드리뷰.png" width="400px" />
 </div>
 
 ---
@@ -208,7 +207,6 @@
 </div>
 </details>
 
-
 ### FIGMA
 
 <details>
@@ -218,15 +216,14 @@
 </div>
 </details>
 
-
 ---
 
 ## 💻 구동 방법
 
 ```markdown
 1. Clone Project
-
 ```
+
 git clone https://lab.ssafy.com/s09-final/S09P31A109.git
 
 ```
@@ -234,30 +231,38 @@ git clone https://lab.ssafy.com/s09-final/S09P31A109.git
 2. change path to /Frontend
 
 ```
+
 npm i
 
 ```
 3. create .env file
 
 ```
+
 # .env.development
+
 NEXT_PUBLIC_API=http://localhost:8080
 NEXT_PUBLIC_GITHUB_CLIENT_ID={YOUR_GITHUB_CLIENT_ID}
 NEXT_PUBLIC_GITHUB_SECRET_KEY={YOUR_GITHUB_SECRET_KEY}
 
 # .env.production
+
 NEXT_PUBLIC_API=http://cogit.kr/api
 NEXT_PUBLIC_GITHUB_CLIENT_ID={YOUR_GITHUB_CLIENT_ID}
 NEXT_PUBLIC_GITHUB_SECRET_KEY={YOUR_GITHUB_SECRET_KEY}
+
 ```
 4. frontend start
 
 ```
+
 npm start
+
 ```
 5. change path to /Backend/src/main/resources
 
 ```
+
 create env.yml
 
 MARIADB_DATABASE_URL: {YOUR_MARIADB_URL}
