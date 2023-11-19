@@ -20,7 +20,7 @@ function SiteCard({ url, image }) {
       onMouseOut={handleMouseOut}
     >
       {isHovering && (
-        <div className="absolute w-full h-[100px] px-10 py-16 text-xl text-center text-white bg-dim rounded-small">
+        <div className="absolute w-full h-[100px] px-5 py-14 text-xl text-center text-white bg-dim rounded-small">
           사이트 이동하기
         </div>
       )}

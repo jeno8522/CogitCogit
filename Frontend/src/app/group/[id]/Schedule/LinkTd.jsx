@@ -19,19 +19,19 @@ function LinkTd ({ questionId, member, solved }) {
   {
     if(solved == 2) {
       return (
-        <Link href={`/code/${codeId[0]}`}>
-          <td>
-            <img src="/images/cogit.png" width={40} height={40} />
-          </td>
-        </Link>
+        <td className='px-4 py-3 items-center'>
+          <Link href={`/code/${codeId[0]}`}>
+            <img className='m-auto' src="/images/cogit.png" width={40} height={40} />
+          </Link>
+        </td>
         )
     } else {
       return (
-        <Link href={`/code/${codeId[0]}`}>
-          <td>
-            <img src="/images/cogit_gray.png" width={40} height={40} />
-          </td>
-        </Link>
+        <td className='px-4 py-3 items-center'>
+          <Link href={`/code/${codeId[0]}`}>
+            <img className='m-auto' src="/images/cogit_gray.png" width={40} height={40} />
+          </Link>
+        </td>
     )}
   }
 };
