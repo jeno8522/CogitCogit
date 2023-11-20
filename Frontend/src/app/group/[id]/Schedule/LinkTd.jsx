@@ -5,6 +5,8 @@ import axios from '@/api/index';
 function LinkTd({ questionId, member, solved }) {
   const [codeId, setCodeId] = useState([]);
 
+  const number = solved;
+
   const fetchCode = async () => {
     const {
       data: { data },
@@ -17,8 +19,8 @@ function LinkTd({ questionId, member, solved }) {
   }, []);
 
   {
-    if (solved == 2) {
-      console.log(solved);
+    if (number == 2) {
+      console.log(number);
       return (
         <td className="items-center px-4 py-3">
           <Link href={`/code/${codeId[0]}`}>
