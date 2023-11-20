@@ -66,9 +66,7 @@ public class CodeServiceImpl implements CodeService {
                     if(codeRequest.isCodeSolved()) {
                         // 해당 문제가 아직 해결되지 않았을 때
                         if(memberAlgorithmQuest.getMemberAlgorithmQuestSolved() != 2) {
-
                             List<MemberTeam> memberTeamList = memberAlgorithmQuest.getAlgorithmQuest().getSchedule().getTeam().getMemberTeamList();
-
 
                             for (MemberTeam memberTeam : memberTeamList) {
                                 if (memberTeam.getMember().getMemberId() == memberId) {
@@ -81,6 +79,7 @@ public class CodeServiceImpl implements CodeService {
                     }
 
                     currentSchedule.add(memberAlgorithmQuest.getAlgorithmQuest());
+                    memberAlgorithmQuestRepository.save(memberAlgorithmQuest);
                 }
             }
         }
