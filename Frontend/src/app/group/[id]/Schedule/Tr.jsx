@@ -11,10 +11,20 @@ function Tr({ member, questions }) {
         num = 0;
         question.memberAlgorithmQuestList.map((memberQuest, jIdx) => {
           if (memberQuest.memberId == member.memberId) {
-            num = memberQuest.memberAlgorithmQuestSolved;
-            console.log('memberId : ' + memberId + ' num : ' + num);
-            if (num > 0) {
-              return <LinkTd member={member} questionId={question.algorithmQuestId} solved={num} />;
+            console.log(
+              'memberId : ' +
+                memberQuest.memberId +
+                ' num : ' +
+                memberQuest.memberAlgorithmQuestSolved,
+            );
+            if (memberQuest.memberAlgorithmQuestSolved > 0) {
+              return (
+                <LinkTd
+                  member={member}
+                  questionId={question.algorithmQuestId}
+                  solved={memberQuest.memberAlgorithmQuestSolved}
+                />
+              );
             } else {
               return <td></td>;
             }

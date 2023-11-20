@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import axios from '@/api/index';
 
-function LinkTd ({ questionId, member, solved }) {
+function LinkTd({ questionId, member, solved }) {
   const [codeId, setCodeId] = useState([]);
 
   const fetchCode = async () => {
@@ -17,23 +17,25 @@ function LinkTd ({ questionId, member, solved }) {
   }, []);
 
   {
-    if(solved == 2) {
+    if (solved == 2) {
+      console.log(solved);
       return (
-        <td className='px-4 py-3 items-center'>
+        <td className="items-center px-4 py-3">
           <Link href={`/code/${codeId[0]}`}>
-            <img className='m-auto' src="/images/cogit.png" width={40} height={40} />
+            <img className="m-auto" src="/images/cogit.png" width={40} height={40} />
           </Link>
         </td>
-        )
+      );
     } else {
       return (
-        <td className='px-4 py-3 items-center'>
+        <td className="items-center px-4 py-3">
           <Link href={`/code/${codeId[0]}`}>
-            <img className='m-auto' src="/images/cogit_gray.png" width={40} height={40} />
+            <img className="m-auto" src="/images/cogit_gray.png" width={40} height={40} />
           </Link>
         </td>
-    )}
+      );
+    }
   }
-};
+}
 
 export default LinkTd;
