@@ -17,6 +17,7 @@ function LinkTd({ questionId, member, solved }) {
   useEffect(() => {
     fetchCode();
     setNumber(solved);
+    console.log(solved);
   }, []);
 
   {
