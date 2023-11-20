@@ -65,7 +65,7 @@ public class CodeServiceImpl implements CodeService {
                 if(!memberAlgorithmQuest.getAlgorithmQuest().getSchedule().getScheduleEndAt().isBefore(LocalDate.now())) {
                     if(codeRequest.isCodeSolved()) {
                         // 해당 문제가 아직 해결되지 않았을 때
-                        if(!memberAlgorithmQuest.isMemberAlgorithmQuestSolved()) {
+                        if(memberAlgorithmQuest.getMemberAlgorithmQuestSolved() != 2) {
 
                             List<MemberTeam> memberTeamList = memberAlgorithmQuest.getAlgorithmQuest().getSchedule().getTeam().getMemberTeamList();
 
@@ -108,7 +108,7 @@ public class CodeServiceImpl implements CodeService {
             MemberAlgorithmQuest memberAlgorithmQuest = MemberAlgorithmQuest.builder()
                     .algorithmQuest(algorithmQuest)
                     .member(member)
-                    .memberAlgorithmQuestSolved(codeRequest.isCodeSolved())
+                    .memberAlgorithmQuestSolved(codeRequest.isCodeSolved() ? 2 : 1)
                     .build();
 
             algorithmQuestRepository.save(algorithmQuest);
