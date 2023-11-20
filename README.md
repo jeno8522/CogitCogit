@@ -7,50 +7,23 @@
 </div>
 
 ## 📖목차
-
 - CogitCogit
-  - [📖목차](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-  - [프로젝트 진행 기간](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-  - [❤ 팀 소개](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-    - [팀명](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-    - [팀원 소개](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-    - [Frontend](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-    - [Backend](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-  - [🎉 프로젝트 요약](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-  - [✨주요 기능 및 구현](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-  - [🖥 서비스 화면](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-  - [🏗️ 아키텍쳐](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-  - [🛠 기술 스택](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-  - [📂 파일 구조](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-  - [📝 설계 문서](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-    - [ERD](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-    - [API](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-    - [FIGMA](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-- [💻 구동 방법](https://www.notion.so/7288eb269b3848dd97b4f6fcfff751de?pvs=21)
-
-```markdown
-- CogitCogit
-  - [프로젝트 진행 기간](#-프로젝트-진행-기간)
-  - [❤ 팀 소개](#-❤-팀-소개)
-    - [팀명](#-팀명)
+  - [프로젝트 진행 기간](#프로젝트-진행-기간)
+  - [❤ 팀 소개](#-팀-소개)
+    - [팀명](#팀명)
     - [팀원 소개](#팀원-소개)
-    - [Frontend](#Frontend)
-    - [Backend](#Backend)
-  - [🎉 프로젝트 요약](#🎉-프로젝트-요약)
-  - [✨주요 기능 및 구현](#✨주요-기능-및-구현)
-  - [🖥 서비스 화면](#🖥-서비스-화면)
-  - [🏗️ 아키텍쳐](#🏗️-아키텍쳐)
-  - [🛠 기술 스택](#🛠-기술-스택)
-  - [📂 파일 구조](#📂-파일-구조)
-  - [📝 설계 문서](#📝-설계-문서)
+    - [Frontend](#frontend)
+    - [Backend](#backend)
+  - [🎉 프로젝트 요약](#-프로젝트-요약)
+  - [✨주요 기능 및 구현](#주요-기능-및-구현)
+  - [🖥 서비스 화면](#-서비스-화면)
+  - [🏗️ 아키텍쳐](#%EF%B8%8F-아키텍쳐)
+  - [🛠 기술 스택](#-기술-스택)
+  - [📝 설계 문서](#-설계-문서)
     - [ERD](#erd)
     - [API](#api)
     - [FIGMA](#figma)
-- [💻 구동 방법](#💻-구동-방법)
-- [💾 결과물](#💾-결과물)
-  - [UCC](#ucc)
-  - [시연 영상](#시연-영상)
-```
+- [💻 구동 방법](#-구동-방법)
 
 ---
 
@@ -70,7 +43,7 @@
 
 ### 팀원 소개
 
-### Front
+### Frontend
 
 |                                                                               |                                                                               |
 | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
