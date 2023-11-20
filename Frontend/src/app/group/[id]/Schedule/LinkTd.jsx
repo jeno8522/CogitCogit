@@ -5,7 +5,7 @@ import axios from '@/api/index';
 function LinkTd({ questionId, member, solved }) {
   const [codeId, setCodeId] = useState([]);
 
-  const number = solved;
+  const [number, setNumber] = useState(0);
 
   const fetchCode = async () => {
     const {
@@ -16,6 +16,7 @@ function LinkTd({ questionId, member, solved }) {
 
   useEffect(() => {
     fetchCode();
+    setNumber(solved);
   }, []);
 
   {
